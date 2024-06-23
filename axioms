@@ -1,0 +1,43 @@
+. visual elements exists within a two dimensional spatial plane
+. spatial plane is a rectangular grid of NxN squares
+. grid can be of NxN squares where 1 <= N <= 30
+. grid height and width may not be equal
+. squares can be of 10 disctinct colors
+. data to represent visual elements (grid) is a list of N lists of numbers from 0 to 9 (representing the colored square)
+. problem represents its model
+. problems represents all problem
+. problem has many example, a test and a solution
+. test represents its model
+. tests represents all test
+. problem/test is the model of a problem test
+. solution represents its model
+. solutions represents all solution
+. problem/solution is the model of a problem solution
+. example represents its model
+. examples represents all example
+. solutions are output
+. examples/output are solution
+. not all outputs are solution
+. input and output are grids
+. test is an input
+. input represent its model
+. inputs represents all input
+. example has input and output
+. examples/output are solution
+. example is a time-frame
+. time-frame is a input grid transitioning to output grid as a result of one iteration of time
+. problem/solution is the desired output of the problem/test input
+. problem/example is the model of problem example
+. problem/examples represents all examples of a problem
+. input and output grid sizes may be different between problem/examples
+. example/input or output represents input and output of an example
+. examples/input and output represents theirselves of all example
+. problems has unique set of logical laws that justify the changes between inputs and outputs
+. law represents its model
+. laws represents all law
+. law is a abstract order that a problem/{examples & test} needs to follow to apply reason
+. solution has one or many reason
+. reason is a model
+. reasons are all reason
+. reason is a pattern found in problem/examples to apply on problem/test  
+. problem/laws represents the laws for a specific problem
