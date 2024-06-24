@@ -1,4 +1,4 @@
-import { AreaData, UnitData } from "../types";
+import { AreaData, FieldsData, UnitData } from "../types";
 import { AreaGeometry } from "./area";
 
 export abstract class CompositeObject extends AreaGeometry {
@@ -7,8 +7,6 @@ export abstract class CompositeObject extends AreaGeometry {
     super(units); // Initialize AreaGeometry
     this.units = units;
   }
-
-  abstract initialize(): void; // Abstract method for initialization
 
   // Method to retrieve all units
   getAllUnits(): UnitData[] {

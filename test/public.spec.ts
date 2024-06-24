@@ -1,30 +1,18 @@
-import { expect } from "chai";
 import { getAllFields } from "../src/utils/groups";
 import { Grid } from "../src/types";
 
 // 009d5c81
 const gridData: Grid = [
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 8, 8, 0, 8, 8, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 0, 0, 0],
-  [0, 0, 0, 0, 0, 8, 8, 8, 8, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 8, 8, 0, 8, 0, 0, 8, 8, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 8, 8, 8, 0, 8, 8, 8, 0],
-  [0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 8, 0],
-  [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 0, 0],
+  [0, 1, 0],
+  [0, 1, 0],
 ];
 
 describe("Public", () => {
   describe("get public function", () => {
     it("retrieve all fields of a grid data", () => {
-      const { fields } = getAllFields(gridData);
-      console.log(fields);
+      const { fields, publicBody } = getAllFields(gridData);
+      console.log(publicBody);
     });
   });
 });

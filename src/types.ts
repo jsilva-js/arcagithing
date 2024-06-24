@@ -7,10 +7,38 @@ export type FieldsData = AreaData[];
 export type AllFieldsData = {
   floor: FieldsData;
   fields: FieldsData;
+  publicBody: FieldsData;
 };
 
 export type GridArray = Grid[];
 export type Visisted = boolean[][];
+
+export type FieldsClassInput = {
+  grid: Grid;
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+};
+
+type ChecksTypes = "perpendicular" | "diagonal" | "same" | "hole";
+export type ChecksInput = {
+  [key in ChecksTypes]: boolean;
+};
+export type Checks = {
+  [key: string]: Function;
+};
+
+type AreasClassification = "public" | "floor" | "private" | "body" | "limb";
+
+export type AllowedClassesObj = {
+  [key in AreasClassification]: boolean;
+};
+
+export type FieldsClassification = (
+  checks: ChecksInput,
+  allowedClasses: AllowedClassesObj
+) => boolean;
 export type GroupFunction = (
   grid: Grid,
   x1: number,
@@ -20,7 +48,7 @@ export type GroupFunction = (
 ) => boolean;
 export type FindIsland = (
   grid: Grid,
-  isPartOfIsland: Function,
+  allowedClasses: AllowedClassesObj,
   strict?: boolean,
   zero?: boolean
 ) => FieldsData;
