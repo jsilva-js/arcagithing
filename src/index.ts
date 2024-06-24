@@ -1,0 +1,23 @@
+// x >= y    -> x is superset of y
+// [thing]   -> 0, 1 or many things
+// thing     -> unique thing
+// x + y     -> (unique x) union (unique y)
+// [x] + [y] -> (all x) union (all y)
+// [x + y]   -> all (x union y(x))
+// [x+y] ~= [x] + [y]
+
+// grid = floor + public
+// floor = [hole]
+// public = [group] + [semigroup] + [unit]
+// group = [body + limb]
+// semigroup = [body] + [limb]
+// body = [public_body] >= [private_body]
+// limb = [public_limb] >= [private_limb]
+// public_body = group of contiguous perpendicular
+//               neighbors of all colors (except 0)
+// public_limb = group of contiguous diagonal
+//               neighbors of all colors (except 0)
+// private_body = group of contiguous perpendicular
+//               neighbors of same color (except 0)
+// private_limb = group of contiguous diagonal
+//               neighbors of same color (except 0)
