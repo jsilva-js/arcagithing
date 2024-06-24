@@ -4,10 +4,10 @@ import { findIslands, groupsSelectors } from "../findIslands";
 export const floor = (grid: Grid) =>
   findIslands(grid, groupsSelectors.floor.extended, false, true);
 
-export const publicArea = (grid: Grid) =>
+export const fields = (grid: Grid) =>
   findIslands(grid, groupsSelectors.public.extended, false, false);
 
 export const getAllFields = (grid: Grid): AllFieldsData => ({
   floor: floor(grid),
-  publicArea: publicArea(grid),
+  fields: fields(grid),
 });

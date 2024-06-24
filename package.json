@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir dist --extensions \".ts,.tsx\" --source-maps inline"
+    "build": "babel src --out-dir dist --extensions \".ts,.tsx\" --source-maps inline",
+    "test": "mocha -r ts-node/register test/**/*.spec.ts",
+    "test:watch": "nodemon"
   },
   "keywords": [],
   "author": "",

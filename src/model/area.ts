@@ -1,6 +1,6 @@
 import { AreaData, Grid } from "../types";
 
-export class AreaGeometry {
+export abstract class AreaGeometry {
   width: number;
   height: number;
   population: number;
@@ -9,13 +9,8 @@ export class AreaGeometry {
   constructor(area: AreaData) {
     this.width = 0;
     this.height = 0;
-    this.population = area.length; // Population is simply the count of units
+    this.population = area.length || 0;
     this.grid = this.mountArea(area);
-    if (this.grid.length === 0) {
-      return;
-    }
-    this.width = this.grid[0].length;
-    this.height = this.grid.length;
   }
 
   mountArea(area: AreaData) {

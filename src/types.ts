@@ -6,7 +6,7 @@ export type FieldsData = AreaData[];
 
 export type AllFieldsData = {
   floor: FieldsData;
-  publicArea: FieldsData;
+  fields: FieldsData;
 };
 
 export type GridArray = Grid[];
@@ -42,4 +42,4 @@ export type DataSets = {
   };
 };
 
-type Digit = number & { readonly brand: unique symbol };
+type Digit = (number & { readonly brand: unique symbol }) | number;
