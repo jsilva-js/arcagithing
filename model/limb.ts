@@ -1,3 +1,5 @@
+import { CompositeObject } from "./core";
+
 export class Limb extends CompositeObject {
   publicLimb: boolean;
 

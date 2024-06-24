@@ -1,3 +1,4 @@
+import { Body } from "./body";
 import { CompositeObject } from "./core";
 import { Limb } from "./limb";
 

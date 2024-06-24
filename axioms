@@ -1,5 +1,3 @@
-. visual elements exists within a two dimensional spatial plane
-. spatial plane is a rectangular grid of NxN squares
 . grid can be of NxN squares where 1 <= N <= 30
 . grid height and width may not be equal
 . squares can be of 10 disctinct colors
@@ -33,8 +31,6 @@
 . example/input or output represents input and output of an example
 . examples/input and output represents theirselves of all example
 . problems has unique set of logical laws that justify the changes between inputs and outputs
-. law represents its model
-. laws represents all law
 . law is a abstract order that a problem/{examples & test} needs to follow to apply reason
 . solution has one or many reason
 . reason is a model
