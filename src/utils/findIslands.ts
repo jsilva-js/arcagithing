@@ -1,4 +1,4 @@
-import { FindIsland, GroupFunction } from "../types";
+import { FieldsData, FindIsland, GroupFunction } from "../types";
 import { dfs } from "./dfs";
 
 export const findIslands: FindIsland = (
@@ -22,7 +22,7 @@ export const findIslands: FindIsland = (
     }
   }
 
-  return islands;
+  return islands as FieldsData;
 };
 
 // extended: with diagonals included

@@ -1,4 +1,14 @@
-export type Grid = number[][];
+export type Row = Digit[];
+export type Grid = Row[];
+export type UnitData = [number, number, Digit];
+export type AreaData = UnitData[];
+export type FieldsData = AreaData[];
+
+export type AllFieldsData = {
+  floor: FieldsData;
+  publicArea: FieldsData;
+};
+
 export type GridArray = Grid[];
 export type Visisted = boolean[][];
 export type GroupFunction = (
@@ -13,7 +23,7 @@ export type FindIsland = (
   isPartOfIsland: Function,
   strict?: boolean,
   zero?: boolean
-) => GridArray;
+) => FieldsData;
 
 export type TrainData = {
   input: GridArray;
@@ -31,3 +41,5 @@ export type DataSets = {
     test: TestData[];
   };
 };
+
+type Digit = number & { readonly brand: unique symbol };

@@ -1,8 +1,13 @@
-import { Grid } from "../../types";
+import { AllFieldsData, Grid } from "../../types";
 import { findIslands, groupsSelectors } from "../findIslands";
 
-export const floor = (grid: Grid): number[][][] =>
+export const floor = (grid: Grid) =>
   findIslands(grid, groupsSelectors.floor.extended, false, true);
 
-export const publicArea = (grid: Grid): number[][][] =>
+export const publicArea = (grid: Grid) =>
   findIslands(grid, groupsSelectors.public.extended, false, false);
+
+export const getAllFields = (grid: Grid): AllFieldsData => ({
+  floor: floor(grid),
+  publicArea: publicArea(grid),
+});
