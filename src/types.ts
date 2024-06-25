@@ -21,13 +21,17 @@ export type Step = {
   y2: number;
 };
 
-export type Selectors =
+export type Selector =
   | "notFloor"
   | "privat"
   | "diagonal"
   | "horizontal"
   | "vertical"
   | "perpendicular";
+
+export type LogicalOperator = "and" | "or";
+export type SelectorOrOperator = Selector | LogicalOperator;
+export type ConditionGroup = (Selector | LogicalOperator)[];
 
 // grid = floor + public
 // floor = [holes]
@@ -51,16 +55,17 @@ export type CombinedType = `${Society}_${Periphery | City}`;
 export type IslandsTypes = {
   [key in GridObjectTypes | CombinedType]?: IslandSelectorConfig[];
 };
+export type ConditionGroups = (ConditionGroup | LogicalOperator)[];
 
 export type IslandSelectorConfig = {
-  selectors: Selectors[];
+  selectors: ConditionGroups;
   excludeUnits: boolean;
   floor: boolean;
 };
 
 export type ConfigIslandSelector = (
   grid: Grid,
-  config: IslandSelectorConfig
+  config: IslandSelectorConfig[]
 ) => FieldsData;
 
 export type GetGridObjects = (

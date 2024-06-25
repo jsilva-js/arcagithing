@@ -1,4 +1,12 @@
-import { FieldsData, FindIsland, GroupFunction, Selectors } from "../types";
+import {
+  FieldsData,
+  FindIsland,
+  GroupFunction,
+  LogicalOperator,
+  Selector,
+  ConditionGroup,
+  ConditionGroups,
+} from "../types";
 import { dfs } from "./dfs";
 
 export const findIslands: FindIsland = (
@@ -31,9 +39,10 @@ export const findIslands: FindIsland = (
 // holes: 0s
 
 // Function to set group criteria based on selectors
-export const configIslandSelector: (selectors: Selectors[]) => GroupFunction = (
-  selectors
-) => {
+
+export const configIslandSelector: (
+  conditionGroups: ConditionGroups
+) => GroupFunction = (conditionGroups) => {
   return (grid, x1, y1, x2, y2) => {
     const conditions = {
       notFloor: grid[x1][y1] !== 0 && grid[x2][y2] !== 0,
@@ -46,8 +55,46 @@ export const configIslandSelector: (selectors: Selectors[]) => GroupFunction = (
         (y1 === y2 && Math.abs(x1 - x2) === 1),
     };
 
-    return selectors.every((selector) => {
-      return conditions[selector];
-    });
+    // Start with the result of the first group assuming it's a condition group
+    let result = evaluateCondition(
+      conditionGroups[0] as ConditionGroup,
+      conditions
+    );
+
+    // Iterate through the array by stepping over elements by 2, assuming alternating pattern
+    for (let i = 1; i < conditionGroups.length; i += 2) {
+      const operator = conditionGroups[i] as LogicalOperator;
+      const nextConditionGroup = conditionGroups[i + 1] as ConditionGroup;
+      const nextResult = evaluateCondition(nextConditionGroup, conditions);
+
+      result = applyLogicalOperation(result, nextResult, operator);
+    }
+
+    return result;
   };
 };
+
+function evaluateCondition(
+  group: ConditionGroup,
+  conditions: Record<Selector, boolean>
+): boolean {
+  let result = conditions[group[0] as Selector];
+
+  for (let i = 1; i < group.length; i += 2) {
+    const operator = group[i] as LogicalOperator;
+    const nextSelector = group[i + 1] as Selector;
+    result = applyLogicalOperation(result, conditions[nextSelector], operator);
+  }
+
+  return result;
+}
+
+function applyLogicalOperation(
+  currentResult: boolean,
+  nextResult: boolean,
+  operator: LogicalOperator
+): boolean {
+  return operator === "and"
+    ? currentResult && nextResult
+    : currentResult || nextResult;
+}

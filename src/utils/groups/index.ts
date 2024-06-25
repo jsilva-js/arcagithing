@@ -26,27 +26,49 @@ import { findIslands, configIslandSelector } from "../findIslands";
 export const groups: IslandsTypes = {
   public: [
     {
-      selectors: ["notFloor", "perpendicular"],
+      selectors: [
+        ["diagonal", "or", "vertical", "or", "horizontal"],
+        "and",
+        ["notFloor"],
+      ],
       excludeUnits: true,
       floor: false,
-    } as IslandSelectorConfig,
+    },
   ],
 };
 
 export const getGridObjects: GetGridObjects = (grid, config) => {
   if (!config?.length) {
-    // Handle empty or undefined config appropriately
     return [];
   }
-  const results = config.map((cfg) =>
-    findIslands(
-      grid,
-      configIslandSelector(cfg.selectors),
-      cfg.excludeUnits,
-      cfg.floor
-    )
-  );
 
-  // Depending on how you want to handle multiple results, you might need to merge or select them
-  return results.flat(); // Example: Flatten results if each `findIslands` returns an array
+  return config
+    .map((cfg) =>
+      findIslands(
+        grid,
+        configIslandSelector(cfg.selectors),
+        cfg.excludeUnits,
+        cfg.floor
+      )
+    )
+    .flat();
 };
+
+// export type ConfigIslandSelector = (
+//   grid: Grid,
+//   config?: IslandSelectorConfig[]  // Making the config parameter optional
+// ) => FieldsData[];
+
+// export const getGridObjects: ConfigIslandSelector = (grid, config = []) => {
+//   // Handle the case where config might be undefined internally
+//   // For example, returning early or defaulting to some behavior
+//   if (!config.length) {
+//     // Handle empty or undefined config appropriately
+//     return [];
+//   }
+
+//   // Normal processing
+//   return config.map(cfg =>
+//     findIslands(grid, cfg.selectors, cfg.excludeUnits, cfg.floor)
+//   ).flat();
+// };
