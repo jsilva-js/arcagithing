@@ -13,7 +13,7 @@ export type AllFieldsData = {
 export type GridArray = Grid[];
 export type Visisted = boolean[][];
 
-export type FieldsClassInput = {
+export type Step = {
   grid: Grid;
   x1: number;
   y1: number;
@@ -31,13 +31,13 @@ export type Checks = {
 
 type AreasClassification = "public" | "floor" | "private" | "body" | "limb";
 
-export type AllowedClassesObj = {
+export type Allowed = {
   [key in AreasClassification]: boolean;
 };
 
 export type FieldsClassification = (
   checks: ChecksInput,
-  allowedClasses: AllowedClassesObj
+  allowedClasses: Allowed
 ) => boolean;
 export type GroupFunction = (
   grid: Grid,
@@ -48,7 +48,7 @@ export type GroupFunction = (
 ) => boolean;
 export type FindIsland = (
   grid: Grid,
-  allowedClasses: AllowedClassesObj,
+  allowedClasses: Allowed,
   strict?: boolean,
   zero?: boolean
 ) => FieldsData;
