@@ -39,6 +39,7 @@ export type FieldsClassification = (
   checks: ChecksInput,
   allowedClasses: Allowed
 ) => boolean;
+
 export type GroupFunction = (
   grid: Grid,
   x1: number,
@@ -46,9 +47,10 @@ export type GroupFunction = (
   x2: number,
   y2: number
 ) => boolean;
+
 export type FindIsland = (
   grid: Grid,
-  allowedClasses: Allowed,
+  isPartOfIsland: Function,
   strict?: boolean,
   zero?: boolean
 ) => FieldsData;

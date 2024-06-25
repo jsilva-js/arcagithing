@@ -1,14 +1,11 @@
-import { Allowed, Grid, Step, Visisted } from "../types";
-import { check, fieldsClassification } from "./findIslands";
+import { Grid, Visisted } from "../types";
 
-const isPartOfIsland = (step: Step, allowedClasses: Allowed) =>
-  fieldsClassification(check({ ...step }), allowedClasses);
 export function dfs(
   grid: Grid,
   x: number,
   y: number,
   visited: Visisted,
-  allowed: Allowed
+  isPartOfIsland: Function
 ) {
   const directions = [
     [1, 0],
@@ -37,7 +34,7 @@ export function dfs(
         ny < grid[0].length &&
         !visited[nx][ny]
       ) {
-        if (isPartOfIsland({ grid, x1: cx, y1: cy, x2: nx, y2: ny }, allowed)) {
+        if (isPartOfIsland(grid, cx, cy, nx, ny)) {
           stack.push([nx, ny]);
         }
       }
