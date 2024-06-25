@@ -37,7 +37,7 @@ export function dfs(
         ny < grid[0].length &&
         !visited[nx][ny]
       ) {
-        if (isPartOfIsland({ grid, x1: nx, y1: ny, x2: cx, y2: cy }, allowed)) {
+        if (isPartOfIsland({ grid, x1: cx, y1: cy, x2: nx, y2: ny }, allowed)) {
           stack.push([nx, ny]);
         }
       }

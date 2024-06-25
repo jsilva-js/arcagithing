@@ -4,15 +4,19 @@ import { Group } from "./group";
 import { SemiGroup } from "./semigroup";
 
 export class Public extends CompositeObject {
+  // group = [body + limb]
+  // semigroup = [body] + [limb]
   groups: Group[] = [];
   semigroups: SemiGroup[] = [];
-  // individual units
   fragments: UnitData[] = [];
   constructor(units: FieldsData) {
     super(units.flat());
+    this.initialize(units);
   }
 
-  initialize(): void {
-    // Further initialize public area, potentially categorizing units into groups and semigroups
+  initialize(fields: FieldsData): void {
+    const thisFields = this.grid;
+
+    thisFields.forEach((field, index) => {});
   }
 }
