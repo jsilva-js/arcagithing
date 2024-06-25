@@ -5,9 +5,9 @@ export type AreaData = UnitData[];
 export type FieldsData = AreaData[];
 
 export type AllFieldsData = {
-  floor: FieldsData;
+  // floor: FieldsData;
   fields: FieldsData;
-  publicBody: FieldsData;
+  // publicBody: FieldsData;
 };
 
 export type GridArray = Grid[];
@@ -51,8 +51,8 @@ export type GroupFunction = (
 export type FindIsland = (
   grid: Grid,
   isPartOfIsland: Function,
-  strict?: boolean,
-  zero?: boolean
+  units?: boolean,
+  floor?: boolean
 ) => FieldsData;
 
 export type TrainData = {

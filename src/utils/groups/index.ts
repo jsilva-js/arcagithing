@@ -1,17 +1,15 @@
 import { AllFieldsData, Grid } from "../../types";
-import { findIslands, groupsSelectors } from "../findIslands";
+import { findIslands, configIslandSelector } from "../findIslands";
 
-export const floor = (grid: Grid) =>
-  findIslands(grid, groupsSelectors.floor.extended, false, true);
+// export const floor = (grid: Grid) =>
+//   findIslands(grid, groupsSelectors.floor.extended, false, true);
 
-export const fields = (grid: Grid) =>
-  findIslands(grid, groupsSelectors.public.extended, false, false);
+export const publicGroups = (grid: Grid) =>
+  findIslands(grid, configIslandSelector(["notFloor"]), true, false);
 
-export const getPublicBody = (grid: Grid) =>
-  findIslands(grid, groupsSelectors.public.normal, true, false);
+// export const getPublicBody = (grid: Grid) =>
+//   findIslands(grid, groupsSelectors.public.normal, true, false);
 
-export const getAllFields = (grid: Grid): AllFieldsData => ({
-  floor: floor(grid),
-  fields: fields(grid),
-  publicBody: getPublicBody(grid),
+export const getGridOjbects = (grid: Grid): AllFieldsData => ({
+  fields: publicGroups(grid),
 });
