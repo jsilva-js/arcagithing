@@ -21,24 +21,52 @@ export type Step = {
   y2: number;
 };
 
-type ChecksTypes = "perpendicular" | "diagonal" | "same" | "hole";
-export type ChecksInput = {
-  [key in ChecksTypes]: boolean;
-};
-export type Checks = {
-  [key: string]: Function;
+export type Selectors =
+  | "notFloor"
+  | "privat"
+  | "diagonal"
+  | "horizontal"
+  | "vertical"
+  | "perpendicular";
+
+// grid = floor + public
+// floor = [holes]
+// public = [group] + [semigroup] + [unit]
+// group = [body + limb]
+// semigroup = [body] + [limb]
+// body = [public_body] >= [private_body]
+// limb = [public_limb] >= [private_limb]
+// private_group = [private_body + private_limb]
+
+export type Society = "public" | "private";
+export type Periphery = "semigroup" | "group";
+export type City = "limb" | "body";
+export type Fragment = "fragment";
+export type Floor = "hole";
+
+export type GridObjectTypes = Society | Periphery | City | Fragment | Floor;
+
+export type CombinedType = `${Society}_${Periphery | City}`;
+
+export type IslandsTypes = {
+  [key in GridObjectTypes | CombinedType]?: IslandSelectorConfig[];
 };
 
-type AreasClassification = "public" | "floor" | "private" | "body" | "limb";
-
-export type Allowed = {
-  [key in AreasClassification]: boolean;
+export type IslandSelectorConfig = {
+  selectors: Selectors[];
+  excludeUnits: boolean;
+  floor: boolean;
 };
 
-export type FieldsClassification = (
-  checks: ChecksInput,
-  allowedClasses: Allowed
-) => boolean;
+export type ConfigIslandSelector = (
+  grid: Grid,
+  config: IslandSelectorConfig
+) => FieldsData;
+
+export type GetGridObjects = (
+  grid: Grid,
+  config?: IslandSelectorConfig[]
+) => FieldsData;
 
 export type GroupFunction = (
   grid: Grid,

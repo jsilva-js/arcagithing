@@ -1,10 +1,10 @@
-import { FieldsData, FindIsland, GroupFunction, Step } from "../types";
+import { FieldsData, FindIsland, GroupFunction, Selectors } from "../types";
 import { dfs } from "./dfs";
 
 export const findIslands: FindIsland = (
   grid,
   isPartOfIsland,
-  units = false,
+  excludeUnits = false,
   floor = false
 ) => {
   const visited = grid.map((row) => row.map(() => false));
@@ -14,7 +14,7 @@ export const findIslands: FindIsland = (
     for (let y = 0; y < grid[x].length; y++) {
       if (!visited[x][y] && floor ? grid[x][y] === 0 : grid[x][y] !== 0) {
         const island = dfs(grid, x, y, visited, isPartOfIsland);
-        if (island.length > (units ? 1 : 0)) {
+        if (island.length > (excludeUnits ? 1 : 0)) {
           // [[x,y,color]...]
           islands.push(island.map(([ix, iy]) => [ix, iy, grid[ix][iy]]));
         }
@@ -29,14 +29,6 @@ export const findIslands: FindIsland = (
 // public: different colors
 // private: same color
 // holes: 0s
-
-type Selectors =
-  | "notFloor"
-  | "privat"
-  | "diagonal"
-  | "horizontal"
-  | "vertical"
-  | "perpendicular";
 
 // Function to set group criteria based on selectors
 export const configIslandSelector: (selectors: Selectors[]) => GroupFunction = (
