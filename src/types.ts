@@ -29,7 +29,7 @@ export type Selector =
   | "vertical"
   | "perpendicular";
 
-export type LogicalOperator = "and" | "or";
+export type LogicalOperator = "and" | "or" | "not";
 export type SelectorOrOperator = Selector | LogicalOperator;
 export type ConditionGroup = (Selector | LogicalOperator)[];
 
@@ -55,7 +55,7 @@ export type CombinedType = `${Society}_${Periphery | City}`;
 export type IslandsTypes = {
   [key in GridObjectTypes | CombinedType]?: IslandSelectorConfig[];
 };
-export type ConditionGroups = (ConditionGroup | LogicalOperator)[];
+export type ConditionGroups = (ConditionGroup | SelectorOrOperator)[];
 
 export type IslandSelectorConfig = {
   selectors: ConditionGroups;

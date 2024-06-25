@@ -1,10 +1,4 @@
-import {
-  ConfigIslandSelector,
-  FieldsData,
-  GetGridObjects,
-  IslandSelectorConfig,
-  IslandsTypes,
-} from "../../types";
+import { GetGridObjects, IslandsTypes } from "../../types";
 import { findIslands, configIslandSelector } from "../findIslands";
 
 // grid = floor + public
@@ -27,7 +21,7 @@ export const groups: IslandsTypes = {
   public: [
     {
       selectors: [
-        ["diagonal", "or", "vertical", "or", "horizontal"],
+        ["diagonal", "or", "horizontal", "not", "vertical"],
         "and",
         ["notFloor"],
       ],
@@ -53,22 +47,3 @@ export const getGridObjects: GetGridObjects = (grid, config) => {
     )
     .flat();
 };
-
-// export type ConfigIslandSelector = (
-//   grid: Grid,
-//   config?: IslandSelectorConfig[]  // Making the config parameter optional
-// ) => FieldsData[];
-
-// export const getGridObjects: ConfigIslandSelector = (grid, config = []) => {
-//   // Handle the case where config might be undefined internally
-//   // For example, returning early or defaulting to some behavior
-//   if (!config.length) {
-//     // Handle empty or undefined config appropriately
-//     return [];
-//   }
-
-//   // Normal processing
-//   return config.map(cfg =>
-//     findIslands(grid, cfg.selectors, cfg.excludeUnits, cfg.floor)
-//   ).flat();
-// };

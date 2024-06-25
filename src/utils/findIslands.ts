@@ -4,7 +4,6 @@ import {
   GroupFunction,
   LogicalOperator,
   Selector,
-  ConditionGroup,
   ConditionGroups,
 } from "../types";
 import { dfs } from "./dfs";
@@ -55,38 +54,49 @@ export const configIslandSelector: (
         (y1 === y2 && Math.abs(x1 - x2) === 1),
     };
 
-    // Start with the result of the first group assuming it's a condition group
-    let result = evaluateCondition(
-      conditionGroups[0] as ConditionGroup,
-      conditions
-    );
-
-    // Iterate through the array by stepping over elements by 2, assuming alternating pattern
-    for (let i = 1; i < conditionGroups.length; i += 2) {
-      const operator = conditionGroups[i] as LogicalOperator;
-      const nextConditionGroup = conditionGroups[i + 1] as ConditionGroup;
-      const nextResult = evaluateCondition(nextConditionGroup, conditions);
-
-      result = applyLogicalOperation(result, nextResult, operator);
-    }
-
-    return result;
+    return evaluateCondition(conditionGroups, conditions);
   };
 };
 
 function evaluateCondition(
-  group: ConditionGroup,
+  group: ConditionGroups,
   conditions: Record<Selector, boolean>
 ): boolean {
-  let result = conditions[group[0] as Selector];
+  let result: boolean | undefined;
+  let applyNot = false; // To handle the 'not' operator
 
-  for (let i = 1; i < group.length; i += 2) {
-    const operator = group[i] as LogicalOperator;
-    const nextSelector = group[i + 1] as Selector;
-    result = applyLogicalOperation(result, conditions[nextSelector], operator);
+  for (let i = 0; i < group.length; i++) {
+    const element = group[i];
+    if (typeof element === "string") {
+      if (element === "not") {
+        applyNot = !applyNot; // Toggle the application of 'not'
+        continue;
+      }
+      if (element === "and" || element === "or") {
+        continue; // Logical operators are processed in pairs
+      }
+    }
+
+    let currentResult = Array.isArray(element)
+      ? evaluateCondition(element, conditions)
+      : conditions[element as Selector];
+
+    if (applyNot) {
+      currentResult = !currentResult; // Apply 'not' to the current result
+      applyNot = false; // Reset not after applying it
+    }
+
+    result =
+      result === undefined
+        ? currentResult
+        : applyLogicalOperation(
+            result,
+            currentResult,
+            group[i - 1] as LogicalOperator
+          );
   }
 
-  return result;
+  return result ?? false; // Handle undefined result if empty group
 }
 
 function applyLogicalOperation(
@@ -94,7 +104,12 @@ function applyLogicalOperation(
   nextResult: boolean,
   operator: LogicalOperator
 ): boolean {
-  return operator === "and"
-    ? currentResult && nextResult
-    : currentResult || nextResult;
+  switch (operator) {
+    case "and":
+      return currentResult && nextResult;
+    case "or":
+      return currentResult || nextResult;
+    default:
+      return currentResult; // By default return the current result if operator is not recognized
+  }
 }
