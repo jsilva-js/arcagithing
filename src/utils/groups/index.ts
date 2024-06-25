@@ -21,12 +21,19 @@ export const groups: IslandsTypes = {
   public: [
     {
       selectors: [
-        ["diagonal", "or", "horizontal", "not", "vertical"],
+        ["diagonal", "or", "horizontal", "or", "vertical"],
         "and",
         ["notFloor"],
       ],
       excludeUnits: true,
       floor: false,
+    },
+  ],
+  hole: [
+    {
+      selectors: ["floor"],
+      excludeUnits: true,
+      floor: true,
     },
   ],
 };

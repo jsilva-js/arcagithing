@@ -27,12 +27,18 @@ export type Selector =
   | "diagonal"
   | "horizontal"
   | "vertical"
-  | "perpendicular";
+  | "floor";
 
 export type LogicalOperator = "and" | "or" | "not";
-export type SelectorOrOperator = Selector | LogicalOperator;
-export type ConditionGroup = (Selector | LogicalOperator)[];
 
+export type SelectorOrOperator = Selector | LogicalOperator;
+
+// Recursive type definition for condition groups
+export type ConditionElement = SelectorOrOperator | ConditionGroup; // Can be a Selector, Operator, or another Group
+export type ConditionGroup = ConditionElement[]; // An array of ConditionElement, allowing nested groups
+
+// Optionally, define a type for the entire configuration to be a single ConditionGroup
+export type ConditionGroups = ConditionGroup;
 // grid = floor + public
 // floor = [holes]
 // public = [group] + [semigroup] + [unit]
@@ -55,7 +61,6 @@ export type CombinedType = `${Society}_${Periphery | City}`;
 export type IslandsTypes = {
   [key in GridObjectTypes | CombinedType]?: IslandSelectorConfig[];
 };
-export type ConditionGroups = (ConditionGroup | SelectorOrOperator)[];
 
 export type IslandSelectorConfig = {
   selectors: ConditionGroups;
