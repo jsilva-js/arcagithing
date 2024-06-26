@@ -1,10 +1,12 @@
-import { AreaData } from "../types";
+import { AreaData, UnitData } from "../types";
 import { Body } from "./body";
 import { Limb } from "./limb";
+import { Unit } from "./unit";
 
 export class SemiGroup {
   bodies: Body[] = [];
   limbs: Limb[] = [];
+  units: Unit[] = [];
 
   constructor() {}
 
@@ -15,5 +17,9 @@ export class SemiGroup {
   // Method to add a limb to the semigroup
   addLimb(limb: AreaData): void {
     this.limbs.push(new Limb(limb));
+  }
+
+  addUnit(unit: UnitData): void {
+    this.units.push(new Unit(unit));
   }
 }

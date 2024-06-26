@@ -36,6 +36,39 @@ export const groups: IslandsTypes = {
       floor: true,
     },
   ],
+  private_body: [
+    {
+      selectors: [
+        ["horizontal", "or", "vertical"],
+        "and",
+        ["notFloor"],
+        "and",
+        ["privat"],
+      ],
+      excludeUnits: false,
+      floor: false,
+    },
+  ],
+  public_body: [
+    {
+      selectors: [["horizontal", "or", "vertical"], "and", ["notFloor"]],
+      excludeUnits: false,
+      floor: false,
+    },
+  ],
+  private_group: [
+    {
+      selectors: [
+        ["horizontal", "or", "vertical", "or", "diagonal"],
+        "and",
+        "privat",
+        "and",
+        ["notFloor"],
+      ],
+      excludeUnits: false,
+      floor: false,
+    },
+  ],
 };
 
 export const getGridObjects: GetGridObjects = (grid, config) => {

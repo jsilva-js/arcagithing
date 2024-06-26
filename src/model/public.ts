@@ -3,15 +3,14 @@ import { classifyIslands } from "../utils/fieldsData/classifyAreas";
 import { CompositeObject } from "./core";
 import { Group } from "./group";
 import { SemiGroup } from "./semigroup";
+import { Unit } from "./unit";
 
-export class Public extends CompositeObject {
+export class Public {
   groups: Group[] = [];
   semigroup: SemiGroup = new SemiGroup();
-  fragments: UnitData[] = [];
   incomplete: any[] = [];
 
   constructor(units: AreaData[]) {
-    super(units.flat());
     this.initialize(units);
   }
 
@@ -27,7 +26,7 @@ export class Public extends CompositeObject {
         } else if (islandClass === "limb") {
           this.semigroup.addLimb(area);
         } else if (islandClass === "unit") {
-          this.fragments.push(area[0]);
+          this.semigroup.units.push(new Unit(area[0]));
         } else {
           this.incomplete.push(area);
         }

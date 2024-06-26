@@ -187,7 +187,7 @@ export const classifyIslands: ClassifyIslands = (areas) => {
   return islandClassesOutput;
 };
 
-const getFirstNonZero = (grid: Grid) => {
+export const getFirstNonZero = (grid: Grid) => {
   let x = 0;
   let y = 0;
   for (let i = 0; i < grid.length; i++) {

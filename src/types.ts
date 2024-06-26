@@ -57,6 +57,7 @@ export type Floor = "floor";
 export type GridObjectTypes = Society | Periphery | City | Fragment | Floor;
 
 export type CombinedType = `${Society}_${Periphery | City}`;
+export type GridGroupTypes = CombinedType | GridObjectTypes;
 
 export type IslandsTypes = {
   [key in GridObjectTypes | CombinedType]?: IslandSelectorConfig[];
