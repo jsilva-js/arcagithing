@@ -7,7 +7,7 @@ import { Unit } from "./unit";
 
 export class Public {
   groups: Group[] = [];
-  semigroup: SemiGroup = new SemiGroup();
+  semigroup: SemiGroup = new SemiGroup("public");
   incomplete: any[] = [];
 
   constructor(units: AreaData[]) {

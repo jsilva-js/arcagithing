@@ -7,8 +7,11 @@ export class SemiGroup {
   bodies: Body[] = [];
   limbs: Limb[] = [];
   units: Unit[] = [];
+  origin: string = "";
 
-  constructor() {}
+  constructor(origin: string) {
+    this.origin = origin;
+  }
 
   addBody(body: AreaData): void {
     this.bodies.push(new Body(body));

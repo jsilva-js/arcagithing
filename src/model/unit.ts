@@ -8,7 +8,13 @@ class UnitsGroup {
 }
 
 export class Unit extends UnitsGroup {
+  x: number = 0;
+  y: number = 0;
+  color: number = 0;
   constructor(unit: UnitData) {
     super(unit);
+    this.x = unit[0];
+    this.y = unit[1];
+    this.color = unit[2];
   }
 }

@@ -1,4 +1,5 @@
 import { AreaData, GridGroupTypes, UnitData } from "../types";
+import { mountGrid } from "../utils/fieldsData/mountGrid";
 import { getGridObjects } from "../utils/groups";
 
 import { CompositeObject } from "./core";
@@ -6,7 +7,7 @@ import { SemiGroup } from "./semigroup";
 import { Unit } from "./unit";
 
 export class Group extends CompositeObject {
-  semigroup: SemiGroup = new SemiGroup();
+  semigroup: SemiGroup = new SemiGroup("group");
   isPrivate: boolean = false;
   privateGroups: AreaData[] = [];
 
@@ -41,6 +42,18 @@ export class Group extends CompositeObject {
           });
         }
       );
+
+      const uniqueUnits: UnitData[] =
+        Array.from(
+          new Set(
+            this.semigroup.units.map((unit) =>
+              JSON.stringify([unit.x, unit.y, unit.color])
+            )
+          )
+        ).map((str) => JSON.parse(str)) || [];
+
+      const gridOfResiduals = mountGrid(uniqueUnits);
+      console.log({ gridOfResiduals });
     });
   }
 
