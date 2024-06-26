@@ -1,4 +1,4 @@
-import { AreaData, UnitData } from "../types";
+import { AreaData, GridGroupTypes, UnitData } from "../types";
 import { Body } from "./body";
 import { Limb } from "./limb";
 import { Unit } from "./unit";
@@ -22,7 +22,7 @@ export class SemiGroup {
     this.limbs.push(new Limb(limb));
   }
 
-  addUnit(unit: UnitData): void {
-    this.units.push(new Unit(unit));
+  addUnit(unit: UnitData, groupType: GridGroupTypes): void {
+    this.units.push(new Unit(unit, groupType));
   }
 }

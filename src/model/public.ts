@@ -26,7 +26,7 @@ export class Public {
         } else if (islandClass === "limb") {
           this.semigroup.addLimb(area);
         } else if (islandClass === "unit") {
-          this.semigroup.units.push(new Unit(area[0]));
+          this.semigroup.addUnit(area[0], "public");
         } else {
           this.incomplete.push(area);
         }

@@ -17,10 +17,10 @@ import { AreaGeometry } from "./area";
 type AvailableSelectors = keyof typeof groups;
 
 export abstract class CompositeObject extends AreaGeometry {
-  units: UnitData[] = [];
+  area: UnitData[] = [];
   constructor(units: AreaData = []) {
     super(units); // Initialize AreaGeometry
-    this.units = units;
+    this.area = units;
   }
 
   extractGridData(grid: Grid, group: AvailableSelectors): FieldsData {
@@ -39,6 +39,6 @@ export abstract class CompositeObject extends AreaGeometry {
 
   // Method to retrieve all units
   getAllUnits(): UnitData[] {
-    return this.units;
+    return this.area;
   }
 }
