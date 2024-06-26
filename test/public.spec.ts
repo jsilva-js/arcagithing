@@ -1,11 +1,5 @@
-import { getGridObjects, groups } from "../src/utils/groups";
 import { Grid } from "../src/types";
 import { Grid as GridModel } from "../src/model/grid";
-import {
-  classifyIsland,
-  classifyIslands,
-} from "../src/utils/fieldsData/classifyAreas";
-import { mountGrid } from "../src/utils/fieldsData/mountGrid";
 
 // 009d5c81
 const gridData: Grid = [
@@ -24,17 +18,17 @@ const gridData: Grid = [
 describe("Public", () => {
   describe("get public function", () => {
     it("retrieve all fields of a grid data", () => {
-      // const result = new GridModel(gridData);
-      // console.log(result);
-      try {
-        const result = getGridObjects(gridData, groups.public);
-        console.log(result);
+      const result = new GridModel(gridData);
+      console.log(result);
+      // try {
+      //   const result = getGridObjects(gridData, groups.public);
+      //   console.log(result);
 
-        const r = classifyIslands(result);
-        console.log(r.body);
-      } catch (error) {
-        console.log(error);
-      }
+      //   const r = classifyIslands(result);
+      //   console.log(r.body);
+      // } catch (error) {
+      //   console.log(error);
+      // }
     });
   });
 });

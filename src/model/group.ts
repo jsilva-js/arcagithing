@@ -4,7 +4,7 @@ import { CompositeObject } from "./core";
 import { Limb } from "./limb";
 import { SemiGroup } from "./semigroup";
 export class Group extends CompositeObject {
-  semigroups: SemiGroup[] = [];
+  semigroups: SemiGroup = new SemiGroup();
   isPrivate: boolean = false;
 
   constructor(units: UnitData[]) {
