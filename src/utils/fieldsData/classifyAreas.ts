@@ -1,4 +1,12 @@
-import { AreaData, FieldsData, Grid } from "../../types";
+import {
+  ClassifyIslands,
+  FieldsData,
+  Grid,
+  GridObjectTypes,
+  IslandClassObject,
+  IslandClasses,
+  IslandClassesOutput,
+} from "../../types";
 import { mountGrid } from "./mountGrid";
 
 function dfsPerpendicular(
@@ -121,6 +129,9 @@ function dfsDiagonal(
 
 export function classifyIsland(grid: Grid, x: number, y: number) {
   const totalUnits = grid.flat().filter((value) => value !== 0).length;
+  if (totalUnits === 1) {
+    return "unit";
+  }
   const visitedDiagonal = grid.map((row) => row.map(() => false));
   let countVisitedDiagonal = [0];
 
@@ -154,26 +165,39 @@ export function classifyIsland(grid: Grid, x: number, y: number) {
   return "incomplete"; // Not all units could be reached (shouldn't happen in consistent grids).
 }
 
-export const classifyIslands = (areas: FieldsData) => {
-  return areas
-    .map((area) => {
-      console.log(mountGrid(area));
-      return mountGrid(area);
-    })
-    .map((island) => {
-      // find first x and y that is not 0
+export const classifyIslands: ClassifyIslands = (areas) => {
+  const islandClassesOutput: IslandClassesOutput = {
+    body: [],
+    limb: [],
+    group: [],
+    unit: [],
+    incomplete: [],
+  };
+  areas.map((area) => {
+    const island = mountGrid(area);
+    const [x, y] = getFirstNonZero(island);
+    const islandClass = classifyIsland(island, x, y);
 
-      let x = 0;
-      let y = 0;
-      for (let i = 0; i < island.length; i++) {
-        for (let j = 0; j < island[i].length; j++) {
-          if (island[i][j] !== 0) {
-            x = i;
-            y = j;
-            break;
-          }
-        }
-      }
-      return classifyIsland(island, x, y);
+    islandClassesOutput[islandClass]?.push({
+      area,
+      islandGrid: island,
+      islandClass,
     });
+  });
+  return islandClassesOutput;
+};
+
+const getFirstNonZero = (grid: Grid) => {
+  let x = 0;
+  let y = 0;
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[i].length; j++) {
+      if (grid[i][j] !== 0) {
+        x = i;
+        y = j;
+        break;
+      }
+    }
+  }
+  return [x, y];
 };

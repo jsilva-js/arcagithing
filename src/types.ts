@@ -62,6 +62,33 @@ export type IslandsTypes = {
   [key in GridObjectTypes | CombinedType]?: IslandSelectorConfig[];
 };
 
+export type IslandClasses = "group" | "body" | "limb" | "unit" | "incomplete";
+
+export type IslandClassObject = {
+  area: AreaData | UnitData[];
+  islandGrid: Grid;
+  islandClass: IslandClasses;
+};
+export type IslandClassesOutput = {
+  [key in IslandClasses]?: IslandClassObject[];
+};
+
+export type ClassifyIslands = (areas: FieldsData) => IslandClassesOutput;
+
+// export const classifyIslands = (areas: FieldsData) => {
+//   return areas
+//     .map((area) => {
+//         const island = mountGrid(area)
+//         const [x,y] = getFirstNonZero(island)
+//         const islandClass = classifyIsland(island, x, y)
+//         return {
+//             area,
+//             islandGrid: island,
+//             islandClass,
+//         };
+//     })
+// };
+
 export type IslandSelectorConfig = {
   selectors: ConditionGroups;
   excludeUnits: boolean;

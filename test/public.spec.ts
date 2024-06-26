@@ -17,8 +17,8 @@ const gridData: Grid = [
   [0, 1, 0, 0, 0],
   [0, 0, 0, 0, 2],
   [2, 0, 1, 0, 2],
-  [0, 1, 0, 0, 2],
-  [0, 0, 0, 0, 0],
+  [0, 1, 0, 0, 0],
+  [0, 0, 0, 3, 0],
 ];
 
 describe("Public", () => {
@@ -31,7 +31,7 @@ describe("Public", () => {
         console.log(result);
 
         const r = classifyIslands(result);
-        console.log(r);
+        console.log(r.body);
       } catch (error) {
         console.log(error);
       }

@@ -1,10 +1,8 @@
+import { AreaData } from "../types";
 import { CompositeObject } from "./core";
 
 export class Body extends CompositeObject {
-  publicBody: boolean;
-
-  constructor(publicBody: boolean) {
-    super();
-    this.publicBody = publicBody;
+  constructor(area: AreaData) {
+    super(area);
   }
 }
