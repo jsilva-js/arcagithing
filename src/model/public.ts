@@ -18,9 +18,11 @@ export class Public {
     const islandsClasses = classifyIslands(units);
 
     Object.entries(islandsClasses).forEach(([islandClass, islandsData]) => {
+      let count = 0;
       islandsData.forEach(({ area }) => {
         if (islandClass === "group") {
-          this.groups.push(new Group(area));
+          count++;
+          this.groups.push(new Group(area, "group" + count));
         } else if (islandClass === "body") {
           this.semigroup.addBody(area);
         } else if (islandClass === "limb") {

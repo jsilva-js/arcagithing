@@ -22,7 +22,7 @@ export class SemiGroup {
     this.limbs.push(new Limb(limb));
   }
 
-  addUnit(unit: UnitData, groupType: GridGroupTypes): void {
+  addUnit(unit: UnitData, groupType: string): void {
     this.units.push(new Unit(unit, groupType));
   }
 }

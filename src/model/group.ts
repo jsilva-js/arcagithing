@@ -7,12 +7,14 @@ import { SemiGroup } from "./semigroup";
 import { Unit, UnitsManager } from "./unit";
 
 export class Group extends CompositeObject {
+  id: string = "";
   semigroup: SemiGroup = new SemiGroup("group");
   isPrivate: boolean = false;
   privateGroups: AreaData[] = [];
 
-  constructor(units: UnitData[]) {
+  constructor(units: UnitData[], id: string) {
     super(units);
+    this.id = id;
     this.isPrivate = units.every((unit) => unit[2] === units[0][2]);
 
     if (this.isPrivate) {
@@ -37,23 +39,11 @@ export class Group extends CompositeObject {
             } else if (islandClass === "limb") {
               this.semigroup.addLimb(area);
             } else if (islandClass === "unit") {
-              this.semigroup.addUnit(area[0], groupType);
+              this.semigroup.addUnit(area[0], id + "_" + groupType);
             }
           });
         }
       );
-
-      // const uniqueUnits: UnitData[] =
-      //   Array.from(
-      //     new Set(
-      //       this.semigroup.units.map((unit) =>
-      //         JSON.stringify([unit.x, unit.y, unit.color])
-      //       )
-      //     )
-      //   ).map((str) => JSON.parse(str)) || [];
-
-      // const gridOfResiduals = mountGrid(uniqueUnits);
-      // console.log({ gridOfResiduals });
       console.log(UnitsManager.getInstance().unitsOrigin);
     });
   }
