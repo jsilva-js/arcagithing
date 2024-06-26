@@ -1,12 +1,10 @@
+import { AreaData, UnitData } from "../types";
 import { CompositeObject } from "./core";
-import { Unit } from "./unit";
 
-export class Floor extends CompositeObject {
-  holes: Unit[] = [];
+export class Floor {
+  holes: AreaData[] = [];
 
-  constructor(units: Unit[]) {
-    super(units);
-  }
+  constructor(units: AreaData[]) {}
 
   initialize(): void {
     // Additional initialization specific to Floor if needed

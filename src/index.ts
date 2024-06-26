@@ -27,7 +27,7 @@
 // grid = floor + public
 // floor = [holes]
 // public = [group] + [semigroup] + [unit]
-// group = [body + limb]
+// group = [body + limb] && >= semigroup
 // semigroup = [body] + [limb]
 // body = [public_body] >= [private_body]
 // limb = [public_limb] >= [private_limb]

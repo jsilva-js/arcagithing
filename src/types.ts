@@ -52,7 +52,7 @@ export type Society = "public" | "private";
 export type Periphery = "semigroup" | "group";
 export type City = "limb" | "body";
 export type Fragment = "fragment";
-export type Floor = "hole";
+export type Floor = "floor";
 
 export type GridObjectTypes = Society | Periphery | City | Fragment | Floor;
 

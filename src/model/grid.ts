@@ -2,7 +2,7 @@ import { CompositeObject } from "./core";
 import { Floor } from "./floor";
 import { Public } from "./public";
 import { Grid as GridData } from "../types";
-import { getAllFields } from "../utils/groups";
+import { getGridObjects, groups } from "../utils/groups";
 
 export class Grid extends CompositeObject {
   floor: Floor | [] = [];
@@ -15,8 +15,9 @@ export class Grid extends CompositeObject {
 
   // Process initial grid data and assign to floor and public
   initializeData(gridData: GridData): void {
-    const { fields, floor } = getAllFields(gridData);
+    const publicFields = getGridObjects(gridData, groups.public);
+    const floor = getGridObjects(gridData, groups.floor);
     this.floor = new Floor(floor);
-    this.fields = new Public(fields);
+    this.fields = new Public(publicFields);
   }
 }

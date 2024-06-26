@@ -1,24 +1,21 @@
+import { AreaData, UnitData } from "../types";
 import { Body } from "./body";
 import { CompositeObject } from "./core";
 import { Limb } from "./limb";
-
+import { SemiGroup } from "./semigroup";
 export class Group extends CompositeObject {
-  bodies: Body[];
-  limbs: Limb[];
+  semigroups: SemiGroup[] = [];
+  isPrivate: boolean = false;
 
-  constructor() {
-    super();
-    this.bodies = [];
-    this.limbs = [];
+  constructor(units: UnitData[]) {
+    super(units);
   }
 
-  addBody(body: Body): void {
-    this.bodies.push(body);
-    this.children.push(body);
-  }
+  // addBody(body: Body): void {
+  //   this.bodies.push(body);
+  // }
 
-  addLimb(limb: Limb): void {
-    this.limbs.push(limb);
-    this.children.push(limb);
-  }
+  // addLimb(limb: Limb): void {
+  //   this.limbs.push(limb);
+  // }
 }

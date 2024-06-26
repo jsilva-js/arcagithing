@@ -25,14 +25,14 @@ export const groups: IslandsTypes = {
         "and",
         ["notFloor"],
       ],
-      excludeUnits: true,
+      excludeUnits: false,
       floor: false,
     },
   ],
-  hole: [
+  floor: [
     {
       selectors: ["floor"],
-      excludeUnits: true,
+      excludeUnits: false,
       floor: true,
     },
   ],
