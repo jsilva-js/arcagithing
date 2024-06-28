@@ -4,9 +4,7 @@ import { Group } from "./group";
 import { Unit } from "./unit";
 
 export class Public extends CompositeObject {
-  groups: Group[] = [];
-  incomplete: AreaData[] = [];
-  publicUnits: Unit[] = [];
+  children: (Group | Unit)[] = [];
   id = "public";
 
   constructor(units: AreaData[]) {
@@ -22,11 +20,9 @@ export class Public extends CompositeObject {
     Object.entries(islandsClasses).forEach(([islandClass, islandsData]) => {
       islandsData.forEach(({ area }) => {
         if (islandClass === "group") {
-          this.groups.push(new Group(area));
+          this.children.push(new Group(area));
         } else if (islandClass === "unit") {
-          this.publicUnits.push(new Unit(area[0], this.id));
-        } else if (islandClass === "incomplete") {
-          this.incomplete.push(area);
+          this.children.push(new Unit(area[0], this.id));
         }
       });
     });

@@ -21,7 +21,7 @@ describe("Public", () => {
   describe("get public function", () => {
     it("retrieve all fields of a grid data", () => {
       const result = new GridModel(gridData);
-      console.log(result.fields?.groups);
+      console.log(result.children);
       // try {
       //   const result = getGridObjects(gridData, groups.private_body);
       //   console.log(result);
