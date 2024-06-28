@@ -5,13 +5,10 @@ import { CompositeObject } from "./core";
 import { Unit, UnitsManager } from "./unit";
 
 export class Group extends CompositeObject {
-  groupUnits: Unit[] = [];
-  children: Body[] = [];
-  private static groupCount = 0;
-  private static bodyCount = 0;
+  children: (Body | Unit)[] = [];
+  public static groupCount = 0;
   constructor(units: UnitData[]) {
     super(units);
-    Group.groupCount++;
     const groupTypes: GridGroupTypes[] = ["public_body"];
 
     groupTypes.forEach((groupType) => {
@@ -20,12 +17,15 @@ export class Group extends CompositeObject {
       console.log({ gridData });
       gridData.forEach((area) => {
         if (area.length > 1) {
-          Group.bodyCount++;
+          Body.bodyCount++;
           this.children.push(
-            new Body(area, "group_" + Group.groupCount, Group.bodyCount)
+            new Body(
+              area,
+              "group_" + Group.groupCount + "_body_" + Body.bodyCount
+            )
           );
         } else {
-          this.groupUnits.push(new Unit(area[0], "group" + Group.groupCount));
+          this.children.push(new Unit(area[0], "group_" + Group.groupCount));
         }
       });
     });

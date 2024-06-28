@@ -20,6 +20,7 @@ export class Public extends CompositeObject {
     Object.entries(islandsClasses).forEach(([islandClass, islandsData]) => {
       islandsData.forEach(({ area }) => {
         if (islandClass === "group") {
+          Group.groupCount++;
           this.children.push(new Group(area));
         } else if (islandClass === "unit") {
           this.children.push(new Unit(area[0], this.id));
