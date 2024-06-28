@@ -1,5 +1,5 @@
-import { AreaData, Grid } from "../types";
-import { mountGrid } from "../utils/fieldsData/mountGrid";
+import { AreaData, Grid } from "../../types";
+import { mountGrid } from "../../utils/fieldsData/mountGrid";
 
 export abstract class AreaGeometry {
   width: number = 0;

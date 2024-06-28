@@ -1,4 +1,4 @@
-import { GridGroupTypes, UnitData } from "../types";
+import { GridGroupTypes, UnitData } from "../../types";
 
 export class UnitsManager {
   private static instance: UnitsManager;

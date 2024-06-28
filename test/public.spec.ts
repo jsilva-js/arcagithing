@@ -1,8 +1,8 @@
 import { Grid } from "../src/types";
-import { Grid as GridModel } from "../src/model/grid";
+import { Grid as GridModel } from "../src/model/grid/";
 import { getGridObjects, groups } from "../src/utils/groups";
 import { classifyIslands } from "../src/utils/fieldsData/classifyAreas";
-import { Body } from "../src/model/body";
+import { Body } from "../src/model/grid/body";
 
 // 009d5c81
 const gridData: Grid = [

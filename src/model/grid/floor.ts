@@ -1,4 +1,4 @@
-import { AreaData, UnitData } from "../types";
+import { AreaData, UnitData } from "../../types";
 import { CompositeObject } from "./core";
 
 export class Floor extends CompositeObject {

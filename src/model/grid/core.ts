@@ -5,13 +5,13 @@ import {
   IslandClasses,
   IslandClassesOutput,
   UnitData,
-} from "../types";
+} from "../../types";
 import {
   classifyIsland,
   classifyIslands,
   getFirstNonZero,
-} from "../utils/fieldsData/classifyAreas";
-import { getGridObjects, groups } from "../utils/groups";
+} from "../../utils/fieldsData/classifyAreas";
+import { getGridObjects, groups } from "../../utils/groups";
 import { AreaGeometry } from "./area";
 
 type AvailableSelectors = keyof typeof groups;

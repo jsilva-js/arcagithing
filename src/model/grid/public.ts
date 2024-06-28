@@ -1,4 +1,4 @@
-import { AreaData } from "../types";
+import { AreaData } from "../../types";
 import { CompositeObject } from "./core";
 import { Group } from "./group";
 import { Unit } from "./unit";

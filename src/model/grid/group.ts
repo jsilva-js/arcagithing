@@ -1,4 +1,4 @@
-import { GridGroupTypes, UnitData } from "../types";
+import { GridGroupTypes, UnitData } from "../../types";
 import { Body } from "./body";
 
 import { CompositeObject } from "./core";
