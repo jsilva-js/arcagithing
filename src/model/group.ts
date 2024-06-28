@@ -8,13 +8,14 @@ import { Unit, UnitsManager } from "./unit";
 
 export class Group extends CompositeObject {
   id: string = "";
+  name = "group";
   semigroup: SemiGroup = new SemiGroup("group");
   isPrivate: boolean = false;
   privateGroups: AreaData[] = [];
 
-  constructor(units: UnitData[], id: string) {
+  constructor(units: UnitData[], from: GridGroupTypes, count: number) {
     super(units);
-    this.id = id;
+    this.id = from + "_" + this.name + "_" + count;
     this.isPrivate = units.every((unit) => unit[2] === units[0][2]);
 
     if (this.isPrivate) {
@@ -28,8 +29,8 @@ export class Group extends CompositeObject {
     ];
 
     groupTypes.forEach((groupType) => {
-      const groups = this.extractGridData(this.grid, groupType);
-      Object.entries(this.classifyIslandsData(groups)).forEach(
+      const gridData = this.extractGridData(this.grid, groupType);
+      Object.entries(this.classifyIslandsData(gridData)).forEach(
         ([islandClass, islandsData]) => {
           islandsData.forEach(({ area }) => {
             if (islandClass === "group") {
@@ -39,7 +40,7 @@ export class Group extends CompositeObject {
             } else if (islandClass === "limb") {
               this.semigroup.addLimb(area);
             } else if (islandClass === "unit") {
-              this.semigroup.addUnit(area[0], id + "_" + groupType);
+              this.semigroup.addUnit(area[0], this.id + "_" + groupType);
             }
           });
         }

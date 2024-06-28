@@ -18,7 +18,7 @@ type AvailableSelectors = keyof typeof groups;
 
 export abstract class CompositeObject extends AreaGeometry {
   area: UnitData[] = [];
-  constructor(units: AreaData = []) {
+  constructor(units: AreaData | undefined = []) {
     super(units); // Initialize AreaGeometry
     this.area = units;
   }
@@ -35,10 +35,5 @@ export abstract class CompositeObject extends AreaGeometry {
 
   classifyIslandsData(fields: FieldsData): IslandClassesOutput {
     return classifyIslands(fields);
-  }
-
-  // Method to retrieve all units
-  getAllUnits(): UnitData[] {
-    return this.area;
   }
 }
