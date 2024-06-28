@@ -1,11 +1,43 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ForceGraph3D from "react-force-graph-3d";
 import SpriteText from "three-spritetext";
 import * as d3 from "d3";
+import * as THREE from "three";
 
+let nn = null;
 export default function App() {
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
   const [dagMode, setDagMode] = useState("td");
+  const graphRef = useRef(null); // Ref to access the force graph component
+
+  // Custom node object using Three.js
+  const createNodeThreeObject = (node) => {
+    if (node.path === "d3") {
+      setTimeout(() => {
+        nn = node;
+      }, 500);
+    }
+
+    const size = 10; // Size of the square, adjust as needed
+    const geometry = new THREE.PlaneGeometry(size, size);
+    const material = new THREE.MeshBasicMaterial({
+      color: node.color || 0x00ff00,
+      side: THREE.DoubleSide,
+    });
+    const mesh = new THREE.Mesh(geometry, material);
+
+    // Optional: Adjust the position to ensure it's centered
+    mesh.position.x = node.x || 0;
+    mesh.position.y = node.y || 0;
+    mesh.position.z = node.z || 0;
+    setTimeout(() => {
+      if (graphRef.current) {
+        const center = new THREE.Vector3(nn.x, nn.y, nn.z); // Example: Look at the origin
+        mesh.lookAt(center);
+      }
+    }, 1100);
+    return mesh;
+  };
 
   useEffect(() => {
     const parsedData = d3.csvParse(d3deps);
@@ -24,15 +56,17 @@ export default function App() {
         links.push({ source: parent, target: path, targetNode: node });
       }
     });
+
     setGraphData({ nodes, links });
   }, []);
 
   return (
     <div className="canva">
       <ForceGraph3D
+        ref={graphRef}
         graphData={graphData}
         dagMode={"td"}
-        dagLevelDistance={200}
+        dagLevelDistance={100}
         backgroundColor="#101020"
         linkColor={() => "rgba(255,255,255,0.2)"}
         nodeRelSize={1}
@@ -40,10 +74,11 @@ export default function App() {
         nodeVal="size"
         nodeLabel="path"
         nodeAutoColorBy="module"
-        nodeOpacity={0.2}
+        nodeOpacity={0.9}
         linkDirectionalParticles={2}
         linkDirectionalParticleWidth={0.8}
         linkDirectionalParticleSpeed={0.006}
+        nodeThreeObject={createNodeThreeObject} // Use the custom node function
       />
     </div>
   );
