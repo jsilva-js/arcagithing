@@ -38,7 +38,6 @@ import { Body } from "./model/grid/body";
 import { CompositeObject } from "./model/grid/core";
 import { Floor } from "./model/grid/floor";
 import { Group } from "./model/grid/group";
-import { Limb } from "./model/grid/limb";
 import { Public } from "./model/grid/public";
 import { Unit } from "./model/grid/unit";
 import { UnitsManager } from "./model/grid/unit";
@@ -50,7 +49,6 @@ export {
   CompositeObject,
   Floor,
   Group,
-  Limb,
   Public,
   Unit,
   UnitsManager,

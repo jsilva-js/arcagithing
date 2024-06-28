@@ -7,8 +7,8 @@ import { Unit, UnitsManager } from "./unit";
 export class Group extends CompositeObject {
   children: (Body | Unit)[] = [];
   public static groupCount = 0;
-  constructor(units: UnitData[]) {
-    super(units);
+  constructor(units: UnitData[], origin: string) {
+    super(units, origin);
     const groupTypes: GridGroupTypes[] = ["public_body"];
 
     groupTypes.forEach((groupType) => {
@@ -16,15 +16,11 @@ export class Group extends CompositeObject {
 
       gridData.forEach((area) => {
         if (area.length > 1) {
-          Body.bodyCount++;
           this.children.push(
-            new Body(
-              area,
-              "group_" + Group.groupCount + "_body_" + Body.bodyCount
-            )
+            new Body(area, this.id + "_body_" + Body.bodyCount++)
           );
         } else {
-          this.children.push(new Unit(area[0], "group_" + Group.groupCount));
+          this.children.push(new Unit(area[0], this.id));
         }
       });
     });

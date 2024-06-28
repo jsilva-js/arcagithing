@@ -4,17 +4,20 @@ import { Unit } from "./unit";
 
 export class Body extends CompositeObject {
   public static pieceCount = 0;
-  id: string = "";
-  children: (Body | Unit)[] = [];
   public static bodyCount = 0;
+  public static allBody: Body[] = [];
+  color: number = -1;
+  children: (Body | Unit)[] = [];
 
   constructor(area: AreaData, origin: string) {
-    super(area);
+    super(area, origin);
+    Body.allBody.push(this);
     this.id = origin;
 
     const isThisPrivate = area.every((unit) => unit[2] === area[0][2]);
 
     if (isThisPrivate) {
+      this.color = area[0][2];
       return;
     }
 
@@ -22,9 +25,8 @@ export class Body extends CompositeObject {
 
     parts.forEach((part) => {
       if (part.length > 1) {
-        Body.pieceCount++;
         this.children.push(
-          new Body(part, this.id + "_" + "piece_" + Body.pieceCount)
+          new Body(part, this.id + "_piece_" + Body.pieceCount++)
         );
       } else {
         this.children.push(new Unit(part[0], this.id));

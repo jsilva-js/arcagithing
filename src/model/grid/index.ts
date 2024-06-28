@@ -21,15 +21,25 @@ export class Grid extends CompositeObject {
   type: GridType = "unknown";
   nature: GridNature = "unknown";
   children: (Floor | Public)[] = [];
+  public static gridCount = 0;
 
-  constructor(gridData: GridData, type: GridType, nature: GridNature) {
-    super([]);
+  constructor(
+    gridData: GridData,
+    type: GridType,
+    nature: GridNature,
+    origin: string
+  ) {
+    super([], origin);
     this.type = type;
     this.nature = nature;
     const floor = this.extractGridData(gridData, "floor");
     const publicFields = this.extractGridData(gridData, "public");
 
-    this.children.push(new Floor(floor));
-    this.children.push(new Public(publicFields));
+    this.children.push(
+      new Floor(floor, origin + "_floor_" + Floor.floorCount++)
+    );
+    this.children.push(
+      new Public(publicFields, origin + "_public_" + Public.publicCount++)
+    );
   }
 }

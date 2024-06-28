@@ -3,7 +3,7 @@ import { Grid as GridModel } from "../src/model/grid/";
 import { getGridObjects, groups } from "../src/utils/groups";
 import { classifyIslands } from "../src/utils/fieldsData/classifyAreas";
 import { Body } from "../src/model/grid/body";
-import { Sample } from "../src/model/train";
+import { Sample } from "../src/model/controller";
 
 // 009d5c81
 const sample = {
@@ -108,7 +108,7 @@ describe("Public", () => {
         sampl.addTrain(train.input, train.output);
       });
 
-      console.log(sampl);
+      console.log(Body);
     });
   });
 });

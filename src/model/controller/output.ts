@@ -3,17 +3,22 @@ import { Grid, GridNature, GridOutput, TestOutput, TrainOutput } from "../grid";
 import { GridManager } from "./gridManager";
 
 export class Output extends GridManager<GridOutput> {
-  addOutput(data: GridData, purpose: GridNature): GridOutput {
-    const grid = new Grid(data, "output", purpose) as GridOutput;
-    this.addGrid(grid);
-    return grid;
+  constructor(sampleId?: string) {
+    if (!sampleId) {
+      return;
+    }
+    super(sampleId);
+  }
+
+  addOutput(data: GridData, nature: GridNature): GridOutput {
+    return this.addGrid(data, "input", nature);
   }
 
   getTrainOutputs(): TrainOutput[] {
-    return this.getGridsByPurposeAndType("train", "output") as TrainOutput[];
+    return this.getGridsByNatureAndType("train", "output") as TrainOutput[];
   }
 
   getTestOutputs(): TestOutput[] {
-    return this.getGridsByPurposeAndType("test", "output") as TestOutput[];
+    return this.getGridsByNatureAndType("test", "output") as TestOutput[];
   }
 }

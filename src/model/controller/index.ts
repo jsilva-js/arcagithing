@@ -7,6 +7,11 @@ export class Sample {
   private inputManager = new Input();
   private outputManager = new Output();
 
+  constructor(sampleId: string) {
+    this.inputManager = new Input(sampleId);
+    this.outputManager = new Output(sampleId);
+  }
+
   addTrain(input: GridData, output: GridData) {
     this.inputManager.addInput(input, "train");
     this.outputManager.addOutput(output, "train");

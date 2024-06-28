@@ -4,12 +4,11 @@ import { Group } from "./group";
 import { Unit } from "./unit";
 
 export class Public extends CompositeObject {
+  public static publicCount = 0;
   children: (Group | Unit)[] = [];
-  id = "public";
 
-  constructor(units: AreaData[]) {
-    super(units.flat());
-
+  constructor(units: AreaData[], origin: string) {
+    super(units.flat(), origin);
     this.initialize(units);
   }
 
@@ -19,8 +18,9 @@ export class Public extends CompositeObject {
     Object.entries(islandsClasses).forEach(([islandClass, islandsData]) => {
       islandsData.forEach(({ area }) => {
         if (islandClass === "group") {
-          Group.groupCount++;
-          this.children.push(new Group(area));
+          this.children.push(
+            new Group(area, this.id + "_group_" + Group.groupCount++)
+          );
         } else if (islandClass === "unit") {
           this.children.push(new Unit(area[0], this.id));
         }

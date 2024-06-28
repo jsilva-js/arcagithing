@@ -6,9 +6,11 @@ export abstract class AreaGeometry {
   height: number = 0;
   population: number = 0;
   grid: Grid = [];
+  area: AreaData = [];
 
   constructor(area: AreaData) {
     if (area.length) {
+      this.area = area;
       this.population = area.length || 0;
       this.grid = this.mountArea(area);
       this.width = this.grid[0].length;
