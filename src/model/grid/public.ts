@@ -16,7 +16,6 @@ export class Public extends CompositeObject {
   initialize(units: AreaData[]): void {
     const islandsClasses = this.classifyIslandsData(units);
 
-    console.log(islandsClasses);
     Object.entries(islandsClasses).forEach(([islandClass, islandsData]) => {
       islandsData.forEach(({ area }) => {
         if (islandClass === "group") {

@@ -25,6 +25,7 @@ export class Grid extends CompositeObject {
   constructor(gridData: GridData, type: GridType, nature: GridNature) {
     super([]);
     this.type = type;
+    this.nature = nature;
     const floor = this.extractGridData(gridData, "floor");
     const publicFields = this.extractGridData(gridData, "public");
 

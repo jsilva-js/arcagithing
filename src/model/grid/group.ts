@@ -14,7 +14,6 @@ export class Group extends CompositeObject {
     groupTypes.forEach((groupType) => {
       const gridData = this.extractGridData(this.grid, groupType);
 
-      console.log({ gridData });
       gridData.forEach((area) => {
         if (area.length > 1) {
           Body.bodyCount++;
