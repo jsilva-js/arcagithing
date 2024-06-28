@@ -3,10 +3,7 @@ import { Grid, GridInput, GridNature, TestInput, TrainInput } from "../grid";
 import { GridManager } from "./gridManager";
 
 export class Input extends GridManager<GridInput> {
-  constructor(sampleId?: string) {
-    if (!sampleId) {
-      return;
-    }
+  constructor(sampleId: string) {
     super(sampleId);
   }
 

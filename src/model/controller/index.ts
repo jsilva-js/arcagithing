@@ -4,8 +4,8 @@ import { Input } from "./input";
 import { Output } from "./output";
 
 export class Sample {
-  private inputManager = new Input();
-  private outputManager = new Output();
+  private inputManager: Input | undefined;
+  private outputManager: Output | undefined;
 
   constructor(sampleId: string) {
     this.inputManager = new Input(sampleId);
@@ -13,26 +13,34 @@ export class Sample {
   }
 
   addTrain(input: GridData, output: GridData) {
-    this.inputManager.addInput(input, "train");
-    this.outputManager.addOutput(output, "train");
+    if (this.inputManager && this.outputManager) {
+      this.inputManager.addInput(input, "train");
+      this.outputManager.addOutput(output, "train");
+    }
   }
 
   addTest(input: GridData, output: GridData) {
-    this.inputManager.addInput(input, "test");
-    this.outputManager.addOutput(output, "test");
+    if (this.inputManager && this.outputManager) {
+      this.inputManager.addInput(input, "test");
+      this.outputManager.addOutput(output, "test");
+    }
   }
 
-  getTrainData(): Example[] {
-    const inputs = this.inputManager.getTrainInputs();
-    const outputs = this.outputManager.getTrainOutputs();
+  getTrainData(): Example[] | undefined {
+    if (this.inputManager && this.outputManager) {
+      const inputs = this.inputManager.getTrainInputs();
+      const outputs = this.outputManager.getTrainOutputs();
 
-    return inputs.map((input, index) => [input, outputs[index]]);
+      return inputs.map((input, index) => [input, outputs[index]]);
+    }
   }
 
-  getTestData(): Problem[] {
-    const inputs = this.inputManager.getTestInputs();
-    const outputs = this.outputManager.getTestOutputs();
+  getTestData(): Problem[] | undefined {
+    if (this.inputManager && this.outputManager) {
+      const inputs = this.inputManager.getTestInputs();
+      const outputs = this.outputManager.getTestOutputs();
 
-    return inputs.map((input, index) => [input, outputs[index]]);
+      return inputs.map((input, index) => [input, outputs[index]]);
+    }
   }
 }

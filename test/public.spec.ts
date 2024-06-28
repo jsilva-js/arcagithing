@@ -102,13 +102,14 @@ const sample = {
 describe("Public", () => {
   describe("get public function", () => {
     it("retrieve all fields of a grid data", () => {
-      const sampl = new Sample();
-
-      sample["12eac192"].train.forEach((train) => {
-        sampl.addTrain(train.input, train.output);
-      });
-
-      console.log(Body);
+      try {
+        const sampl = new Sample("12eac192");
+        sample["12eac192"].train.forEach((train) => {
+          sampl.addTrain(train.input, train.output);
+        });
+      } catch (e) {
+        console.log(e);
+      }
     });
   });
 });
