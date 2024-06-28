@@ -8,13 +8,22 @@ export class SemiGroup {
   limbs: Limb[] = [];
   units: Unit[] = [];
   origin: string = "";
+  name: string = "";
 
   constructor(origin: string) {
     this.origin = origin;
+    this.name = origin + "_" + "sg";
   }
 
   addBody(body: AreaData): void {
-    this.bodies.push(new Body(body));
+    const isBodyPrivate = body.every((unit) => unit[2] === body[0][2]);
+
+    if (isBodyPrivate) {
+      Body.c++;
+      Body.parts.push(new Body(body, this.name + "_" + Body.c));
+    } else {
+      this.bodies.push(new Body(body, this.name));
+    }
   }
 
   // Method to add a limb to the semigroup
@@ -22,7 +31,7 @@ export class SemiGroup {
     this.limbs.push(new Limb(limb));
   }
 
-  addUnit(unit: UnitData, groupType: string): void {
-    this.units.push(new Unit(unit, groupType));
+  addUnit(unit: UnitData, origin: string): void {
+    this.units.push(new Unit(unit, origin));
   }
 }

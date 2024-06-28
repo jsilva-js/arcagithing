@@ -66,7 +66,7 @@ export type IslandsTypes = {
 export type IslandClasses = "group" | "body" | "limb" | "unit" | "incomplete";
 
 export type IslandClassObject = {
-  area: AreaData | UnitData[];
+  area: UnitData[];
   islandGrid: Grid;
   islandClass: IslandClasses;
 };

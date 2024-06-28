@@ -7,37 +7,27 @@ import { Unit } from "./unit";
 
 export class Public extends CompositeObject {
   groups: Group[] = [];
-  semigroup: SemiGroup = new SemiGroup("public");
-  incomplete: any[] = [];
+  incomplete: AreaData[] = [];
+  publicUnits: Unit[] = [];
   id = "public";
 
   constructor(units: AreaData[]) {
     super(units.flat());
+
     this.initialize(units);
   }
 
   initialize(units: AreaData[]): void {
     const islandsClasses = this.classifyIslandsData(units);
-    const classCounters = new Map<string, number>();
 
-    Object.keys(islandsClasses).forEach((islandClass) => {
-      classCounters.set(islandClass, 0);
-    });
-
+    console.log(islandsClasses);
     Object.entries(islandsClasses).forEach(([islandClass, islandsData]) => {
-      const currentCount = classCounters.get(islandClass) || 0;
-      classCounters.set(islandClass, currentCount + 1);
-
       islandsData.forEach(({ area }) => {
         if (islandClass === "group") {
-          this.groups.push(new Group(area, "public", currentCount + 1));
-        } else if (islandClass === "body") {
-          this.semigroup.addBody(area);
-        } else if (islandClass === "limb") {
-          this.semigroup.addLimb(area);
+          this.groups.push(new Group(area));
         } else if (islandClass === "unit") {
-          this.semigroup.addUnit(area[0], this.id);
-        } else {
+          this.publicUnits.push(new Unit(area[0], this.id));
+        } else if (islandClass === "incomplete") {
           this.incomplete.push(area);
         }
       });
