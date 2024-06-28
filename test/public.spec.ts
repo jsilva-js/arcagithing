@@ -4,6 +4,8 @@ import { getGridObjects, groups } from "../src/utils/groups";
 import { classifyIslands } from "../src/utils/fieldsData/classifyAreas";
 import { Body } from "../src/model/grid/body";
 import { Sample } from "../src/model/controller";
+import { InputAnalysis } from "../src/model/analysis/inputAnalysis";
+import { AnalysisManager } from "../src/model/analysis";
 
 // 009d5c81
 const sample = {
@@ -107,6 +109,12 @@ describe("Public", () => {
         sample["12eac192"].train.forEach((train) => {
           sampl.addTrain(train.input, train.output);
         });
+
+        const inputs = new AnalysisManager("12eac192").getGridsByNatureAndType(
+          "train",
+          "input"
+        );
+        console.log({ inputs });
       } catch (e) {
         console.log(e);
       }

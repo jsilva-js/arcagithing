@@ -5,10 +5,12 @@ export class GridManager<T extends Grid> {
   protected grids: T[] = [];
   public static inputCount = 0;
   public static outputCount = 0;
-  sampleId: string = "";
+  sampleId: string;
+
   constructor(sampleId: string) {
     this.sampleId = sampleId;
   }
+
   addGrid(data: GridData, type: GridType, nature: GridNature): T {
     const grid = new Grid(
       data,
@@ -21,7 +23,6 @@ export class GridManager<T extends Grid> {
           : GridManager.outputCount++)
     ) as T;
     this.grids.push(grid);
-
     return grid;
   }
 
