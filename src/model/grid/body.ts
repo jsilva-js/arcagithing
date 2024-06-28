@@ -5,13 +5,11 @@ import { Unit } from "./unit";
 export class Body extends CompositeObject {
   public static pieceCount = 0;
   public static bodyCount = 0;
-  public static allBody: Body[] = [];
   color: number = -1;
   children: (Body | Unit)[] = [];
 
   constructor(area: AreaData, origin: string) {
     super(area, origin);
-    Body.allBody.push(this);
     this.id = origin;
 
     const isThisPrivate = area.every((unit) => unit[2] === area[0][2]);

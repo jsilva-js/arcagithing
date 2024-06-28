@@ -110,11 +110,8 @@ describe("Public", () => {
           sampl.addTrain(train.input, train.output);
         });
 
-        const inputs = new AnalysisManager("12eac192").getGridsByNatureAndType(
-          "train",
-          "input"
-        );
-        console.log({ inputs });
+        const inputStats = sampl.analyzeInputConstraints();
+        console.log(inputStats);
       } catch (e) {
         console.log(e);
       }

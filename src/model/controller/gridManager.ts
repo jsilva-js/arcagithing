@@ -1,34 +1,45 @@
 import { Grid as GridData } from "../../types";
 import { Grid, GridNature, GridType } from "../grid";
 
-export class GridManager<T extends Grid> {
-  protected grids: T[] = [];
-  public static inputCount = 0;
-  public static outputCount = 0;
-  sampleId: string;
+export class DataStore {
+  private grids: Grid[] = [];
 
-  constructor(sampleId: string) {
-    this.sampleId = sampleId;
-  }
-
-  addGrid(data: GridData, type: GridType, nature: GridNature): T {
+  addGrid(
+    data: GridData,
+    type: GridType,
+    nature: GridNature,
+    sampleId: string
+  ): Grid {
     const grid = new Grid(
       data,
       type,
       nature,
-      this.sampleId +
-        "_" +
-        (type === "input"
-          ? GridManager.inputCount++
-          : GridManager.outputCount++)
-    ) as T;
+      `${sampleId}_${type}_${this.grids.length + 1}`
+    );
     this.grids.push(grid);
     return grid;
   }
 
-  getGridsByNatureAndType(nature: GridNature, type: GridType): T[] {
+  getGridsByNatureAndType(nature: GridNature, type: GridType): Grid[] {
     return this.grids.filter(
       (grid) => grid.nature === nature && grid.type === type
     );
+  }
+}
+export class GridManager<T extends Grid> {
+  private dataStore: DataStore;
+  private sampleId: string;
+
+  constructor(dataStore: DataStore, sampleId: string) {
+    this.dataStore = dataStore;
+    this.sampleId = sampleId;
+  }
+
+  addGrid(data: GridData, type: GridType, nature: GridNature): T {
+    return this.dataStore.addGrid(data, type, nature, this.sampleId) as T;
+  }
+
+  getGridsByNatureAndType(nature: GridNature, type: GridType): T[] {
+    return this.dataStore.getGridsByNatureAndType(nature, type) as T[];
   }
 }

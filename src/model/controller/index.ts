@@ -3,62 +3,48 @@ import { InputOutputAnalysis } from "../analysis/inOutAnalysis";
 import { InputAnalysis } from "../analysis/inputAnalysis";
 import { OutputAnalysis } from "../analysis/outputAnalysis";
 import { Example, Problem } from "../grid";
+import { DataStore } from "./gridManager";
 import { Input } from "./input";
 import { Output } from "./output";
 
 export class Sample {
-  private inputManager: Input | undefined;
-  private outputManager: Output | undefined;
+  private inputManager: Input;
+  private outputManager: Output;
   private inputAnalysis: InputAnalysis;
   private outputAnalysis: OutputAnalysis;
-  private inputOutputAnalysis: InputOutputAnalysis;
+  // private inputOutputAnalysis: InputOutputAnalysis;
+  private dataStore: DataStore;
 
   constructor(sampleId: string) {
-    this.inputManager = new Input(sampleId);
-    this.outputManager = new Output(sampleId);
-    this.inputAnalysis = new InputAnalysis(sampleId);
-    this.outputAnalysis = new OutputAnalysis(sampleId);
-    this.inputOutputAnalysis = new InputOutputAnalysis(sampleId);
+    this.dataStore = new DataStore();
+    this.inputManager = new Input(this.dataStore, sampleId);
+    this.outputManager = new Output(this.dataStore, sampleId);
+    this.inputAnalysis = new InputAnalysis(this.dataStore, sampleId);
+    this.outputAnalysis = new OutputAnalysis(this.dataStore, sampleId);
   }
 
-  addTrain(input: GridData, output: GridData) {
-    if (this.inputManager && this.outputManager) {
-      this.inputManager.addInput(input, "train");
-      this.outputManager.addOutput(output, "train");
-      this.inputAnalysis.addGrid(input, "input", "train");
-      this.outputAnalysis.addGrid(output, "output", "train");
-      this.inputOutputAnalysis.addGrid(input, "input", "train");
-      this.inputOutputAnalysis.addGrid(output, "output", "train");
-    }
+  addTrain(inputData: GridData, outputData: GridData) {
+    this.inputAnalysis.addGrid(inputData, "input", "train");
+    this.outputAnalysis.addGrid(outputData, "output", "train");
   }
 
-  addTest(input: GridData, output: GridData) {
-    if (this.inputManager && this.outputManager) {
-      this.inputManager.addInput(input, "test");
-      this.outputManager.addOutput(output, "test");
-      this.inputAnalysis.addGrid(input, "input", "test");
-      this.outputAnalysis.addGrid(output, "output", "test");
-      this.inputOutputAnalysis.addGrid(input, "input", "test");
-      this.inputOutputAnalysis.addGrid(output, "output", "test");
-    }
+  addTest(inputData: GridData, outputData: GridData) {
+    this.inputAnalysis.addGrid(inputData, "input", "test");
+    this.outputAnalysis.addGrid(outputData, "output", "test");
   }
 
   getTrainData(): Example[] | undefined {
-    if (this.inputManager && this.outputManager) {
-      const inputs = this.inputManager.getTrainInputs();
-      const outputs = this.outputManager.getTrainOutputs();
+    const inputs = this.inputManager.getTrainInputs();
+    const outputs = this.outputManager.getTrainOutputs();
 
-      return inputs.map((input, index) => [input, outputs[index]]);
-    }
+    return inputs.map((input, index) => [input, outputs[index]]) as [];
   }
 
   getTestData(): Problem[] | undefined {
-    if (this.inputManager && this.outputManager) {
-      const inputs = this.inputManager.getTestInputs();
-      const outputs = this.outputManager.getTestOutputs();
+    const inputs = this.inputManager.getTestInputs();
+    const outputs = this.outputManager.getTestOutputs();
 
-      return inputs.map((input, index) => [input, outputs[index]]);
-    }
+    return inputs.map((input, index) => [input, outputs[index]]) as [];
   }
 
   analyzeInputConstraints() {
@@ -67,9 +53,5 @@ export class Sample {
 
   analyzeOutputConstraints() {
     return this.outputAnalysis.gatherOutputConstraints();
-  }
-
-  analyzeInputOutputConstraints() {
-    return this.inputOutputAnalysis.gatherInputOutputConstraints();
   }
 }
