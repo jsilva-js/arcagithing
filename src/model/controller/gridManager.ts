@@ -10,18 +10,15 @@ export class GridManager<T extends Grid> {
     this.sampleId = sampleId;
   }
   addGrid(data: GridData, type: GridType, nature: GridNature): T {
-    if (type === "input") {
-      GridManager.inputCount++;
-    } else if (type === "output") {
-      GridManager.outputCount++;
-    }
     const grid = new Grid(
       data,
       type,
       nature,
       this.sampleId +
         "_" +
-        (type === "input" ? GridManager.inputCount : GridManager.outputCount)
+        (type === "input"
+          ? GridManager.inputCount++
+          : GridManager.outputCount++)
     ) as T;
     this.grids.push(grid);
 
