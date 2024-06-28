@@ -1,8 +1,6 @@
-import { AreaData, FieldsData, UnitData } from "../types";
-import { classifyIslands } from "../utils/fieldsData/classifyAreas";
+import { AreaData } from "../types";
 import { CompositeObject } from "./core";
 import { Group } from "./group";
-import { SemiGroup } from "./semigroup";
 import { Unit } from "./unit";
 
 export class Public extends CompositeObject {

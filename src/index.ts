@@ -40,7 +40,6 @@ import { Floor } from "./model/floor";
 import { Group } from "./model/group";
 import { Limb } from "./model/limb";
 import { Public } from "./model/public";
-import { SemiGroup } from "./model/semigroup";
 import { Unit } from "./model/unit";
 import { UnitsManager } from "./model/unit";
 
@@ -53,7 +52,6 @@ export {
   Group,
   Limb,
   Public,
-  SemiGroup,
   Unit,
   UnitsManager,
 };
