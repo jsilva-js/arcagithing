@@ -10,12 +10,16 @@ export abstract class AreaGeometry {
 
   constructor(area: AreaData) {
     if (area.length) {
-      this.area = area;
-      this.population = area.length || 0;
-      this.grid = this.mountArea(area);
-      this.width = this.grid[0].length;
-      this.height = this.grid.length;
+      this.updateArea(area);
     }
+  }
+
+  updateArea(area: AreaData) {
+    this.area = area;
+    this.population = area.length || 0;
+    this.grid = this.mountArea(area);
+    this.width = this.grid[0].length;
+    this.height = this.grid.length;
   }
 
   mountArea(area: AreaData) {

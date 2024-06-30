@@ -19,7 +19,7 @@ type AvailableSelectors = keyof typeof groups;
 export abstract class CompositeObject extends AreaGeometry {
   id: string = "";
   constructor(units: AreaData | undefined = [], origin: string) {
-    super(units); // Initialize AreaGeometrysw
+    super(units); // Initialize AreaGeometry
     this.id = origin;
   }
 

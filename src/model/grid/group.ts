@@ -25,6 +25,6 @@ export class Group extends CompositeObject {
       });
     });
 
-    console.log(UnitsManager.getInstance().unitsOrigin);
+    // console.log(UnitsManager.getInstance().unitsOrigin);
   }
 }

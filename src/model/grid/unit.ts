@@ -31,6 +31,7 @@ export class Unit extends UnitsGroup {
   x: number = 0;
   y: number = 0;
   color: number = 0;
+  children: Unit[] = [];
   constructor(unit: UnitData, groupType: string) {
     super(unit, groupType);
     this.x = unit[0];

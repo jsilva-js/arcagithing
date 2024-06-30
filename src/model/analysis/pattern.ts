@@ -1,22 +1,7 @@
+import { Grid } from "../grid";
 import { InputOutputPattern } from "./inOutAnalysis";
 import { InputPattern } from "./inputAnalysis";
 import { OutputPattern } from "./outputAnalysis";
-
-class ObjectStats {
-  color: number;
-  parts: number;
-
-  constructor(color: number, parts: number) {
-    this.color = color;
-    this.parts = parts;
-  }
-}
-
-class PrivateBody extends ObjectStats {
-  constructor(color: number, parts: number) {
-    super(color, parts);
-  }
-}
 
 export class Pattern {
   public properties: Record<string, any> = {};
