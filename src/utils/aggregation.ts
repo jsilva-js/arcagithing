@@ -99,9 +99,10 @@ export function aggregateTaskUnits(dag: DAGNode): {
 
 export function aggregateUnitsByGridType(
   obj: RawNodeTreeData,
-  gridType: GridTypes = "input"
+  gridType: GridTypes = "input",
+  idx: string
 ): UnitDataWithId[][] {
-  const inputRegex = new RegExp(`${gridType}-(\\d+)`);
+  const inputRegex = new RegExp(`${gridType}-${idx}`);
   const result: UnitDataWithId[][] = [];
 
   for (const key in obj) {

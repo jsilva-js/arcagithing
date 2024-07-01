@@ -12,7 +12,7 @@ export class Sample {
   private outputManager: Output;
   private inputAnalysis: InputAnalysis;
   private outputAnalysis: OutputAnalysis;
-  // private inputOutputAnalysis: InputOutputAnalysis;
+  private inputOutputAnalysis: InputOutputAnalysis;
   private dataStore: DataStore;
 
   constructor(sampleId: string) {
@@ -21,6 +21,10 @@ export class Sample {
     this.outputManager = new Output(this.dataStore, sampleId);
     this.inputAnalysis = new InputAnalysis(this.dataStore, sampleId);
     this.outputAnalysis = new OutputAnalysis(this.dataStore, sampleId);
+    this.inputOutputAnalysis = new InputOutputAnalysis(
+      this.dataStore,
+      sampleId
+    );
   }
 
   addTrain(inputData: GridData, outputData: GridData) {
@@ -53,5 +57,11 @@ export class Sample {
 
   analyzeOutputConstraints() {
     return this.outputAnalysis.gatherOutputConstraints();
+  }
+
+  analyzeInputOutputConstraints() {
+    this.analyzeInputConstraints();
+    this.analyzeOutputConstraints();
+    return this.inputOutputAnalysis.gatherInputOutputConstraints();
   }
 }

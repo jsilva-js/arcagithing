@@ -34,10 +34,14 @@ export class ObjectStats {
     return aggregateTaskUnits(dag);
   };
 
-  public getAggregateUnitsByGridType = (gridType: GridTypes) => {
+  public getAggregateUnitsByGridType = (gridType: GridTypes, idx: string) => {
     const rawRagTree = UnitsManager.getInstance();
 
-    return aggregateUnitsByGridType(rawRagTree.unitsOrigin as {}, gridType);
+    return aggregateUnitsByGridType(
+      rawRagTree.unitsOrigin as {},
+      gridType,
+      idx
+    );
   };
 }
 
@@ -63,21 +67,27 @@ export class PrivateBody extends ObjectStats {
     return this.nodes;
   }
 
-  getPrivateBodiesStats(grids: Grid[], gridType: GridTypes): StatProps {
+  getPrivateBodiesStats(grids: Grid[], gridType: GridTypes): StatProps[] {
+    const result: StatProps[] = [];
+    grids.forEach((grid: Grid, i) => {
+      result.push(this.getPrivateBodyStats(grid, gridType, i.toString()));
+    });
+
+    return result;
+  }
+  getPrivateBodyStats(grid: Grid, gridType: GridTypes, idx: string): StatProps {
     const nodes: Body[] = [];
     const stats = new ObjectStats();
 
-    grids.forEach((grid: Grid) => {
-      const privateBodyAnalysis = new PrivateBody();
-      privateBodyAnalysis.findAll(grid);
-      nodes.push(...privateBodyAnalysis.nodes);
-    });
+    const privateBodyAnalysis = new PrivateBody();
+    privateBodyAnalysis.findAll(grid);
+    nodes.push(...privateBodyAnalysis.nodes);
 
     nodes.forEach((node) => {
       stats.addStats(node.color, node.length, node.id);
     });
 
-    stats.getAggregateUnitsByGridType(gridType).forEach((restUnits) => {
+    stats.getAggregateUnitsByGridType(gridType, idx).forEach((restUnits) => {
       restUnits.forEach((unit) => {
         stats.addStats(unit[2] as number, 1, unit[3] as string);
       });
