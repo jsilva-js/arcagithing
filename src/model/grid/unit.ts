@@ -1,8 +1,8 @@
-import { GridGroupTypes, UnitData } from "../../types";
+import { RawNodeTreeData, UnitData } from "../../types";
 
 export class UnitsManager {
   private static instance: UnitsManager;
-  public unitsOrigin: { [key in GridGroupTypes | string]?: UnitData[] } = {};
+  public unitsOrigin: RawNodeTreeData = {};
 
   private constructor() {}
 

@@ -6,7 +6,7 @@ import { Pattern } from "./pattern";
 export class InputAnalysis extends AnalysisManager<GridInput> {
   gatherInputConstraints() {
     const inputs = this.getGridsByNatureAndType("train", "input");
-    return this.getConstraints(inputs);
+    return this.getConstraints(inputs, "input");
   }
 }
 

@@ -1,6 +1,6 @@
 export type Row = Digit[];
 export type Grid = Row[];
-export type UnitData = [number, number, Digit];
+export type UnitData = [number, number, number];
 export type AreaData = UnitData[];
 export type FieldsData = AreaData[];
 
@@ -54,6 +54,22 @@ export type City = "limb" | "body";
 export type Fragment = "fragment";
 export type Floor = "floor";
 
+export type DAGNodes =
+  | "input"
+  | "output"
+  | "public"
+  | "group"
+  | "body"
+  | "piece"
+  | "root"
+  | string;
+export interface DAGNode {
+  name: DAGNodes;
+  children: DAGNode[];
+  units: UnitData[];
+  index: number;
+}
+
 export type GridObjectTypes = Society | Periphery | City | Fragment | Floor;
 
 export type CombinedType = `${Society}_${Periphery | City}`;
@@ -62,6 +78,8 @@ export type GridGroupTypes = CombinedType | GridObjectTypes;
 export type IslandsTypes = {
   [key in GridObjectTypes | CombinedType]?: IslandSelectorConfig[];
 };
+
+export type RawNodeTreeData = { [key: string]: UnitData[] };
 
 export type IslandClasses = "group" | "body" | "limb" | "unit" | "incomplete";
 
@@ -139,3 +157,16 @@ export type DataSets = {
 };
 
 type Digit = (number & { readonly brand: unique symbol }) | number;
+
+type Color = Digit;
+type AreaLength = number;
+export type StatsArr = [Color, AreaLength][]; // [color, length]
+export type StatPropName = "color" | "length";
+export type StatProp = { length: number };
+export type StatObject = { [key: number]: StatProp };
+
+export type StatProps = {
+  [key in StatPropName]: StatObject;
+};
+
+export type GridTypes = "input" | "output";

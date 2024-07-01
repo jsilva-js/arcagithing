@@ -9,7 +9,7 @@ export class DataStore {
     nature: GridNature,
     sampleId: string
   ): Grid {
-    const grid = new Grid(data, type, nature, `${sampleId}_${type}`);
+    const grid = new Grid(data, type, nature, `${sampleId}|${type}`);
     this.grids.push(grid);
     return grid;
   }

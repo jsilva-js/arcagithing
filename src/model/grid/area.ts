@@ -4,7 +4,7 @@ import { mountGrid } from "../../utils/fieldsData/mountGrid";
 export abstract class AreaGeometry {
   width: number = 0;
   height: number = 0;
-  population: number = 0;
+  length: number = 0;
   grid: Grid = [];
   area: AreaData = [];
 
@@ -16,7 +16,7 @@ export abstract class AreaGeometry {
 
   updateArea(area: AreaData) {
     this.area = area;
-    this.population = area.length || 0;
+    this.length = area.length || 0;
     this.grid = this.mountArea(area);
     this.width = this.grid[0].length;
     this.height = this.grid.length;

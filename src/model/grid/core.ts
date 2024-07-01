@@ -18,6 +18,7 @@ type AvailableSelectors = keyof typeof groups;
 
 export abstract class CompositeObject extends AreaGeometry {
   id: string = "";
+  color: number = -1;
 
   constructor(
     units: AreaData | undefined = [],
@@ -57,7 +58,7 @@ class IDManager {
 
     const entry = this.instanceMap.get(mapKey);
     if (entry) {
-      instance.id = `${origin}_${entry.count++}`;
+      instance.id = `${origin}-${entry.count++}`;
     } else {
       throw new Error("Unable to generate ID");
     }
