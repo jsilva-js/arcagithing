@@ -6,9 +6,9 @@ import { Unit, UnitsManager } from "./unit";
 
 export class Group extends CompositeObject {
   children: (Body | Unit)[] = [];
-  public static groupCount = 0;
-  constructor(units: UnitData[], origin: string) {
-    super(units, origin);
+
+  constructor(units: UnitData[], origin: string, parentId: string) {
+    super(units, origin, parentId);
     const groupTypes: GridGroupTypes[] = ["public_body"];
 
     groupTypes.forEach((groupType) => {
@@ -16,15 +16,11 @@ export class Group extends CompositeObject {
 
       gridData.forEach((area) => {
         if (area.length > 1) {
-          this.children.push(
-            new Body(area, this.id + "_body_" + Body.bodyCount++)
-          );
+          this.children.push(new Body(area, `${this.id}_body`, this.id));
         } else {
           this.children.push(new Unit(area[0], this.id));
         }
       });
     });
-
-    // console.log(UnitsManager.getInstance().unitsOrigin);
   }
 }

@@ -26,24 +26,18 @@ export class Grid extends CompositeObject {
     gridData: GridData,
     type: GridType,
     nature: GridNature,
-    origin: string
+    origin: string,
+    parentId: string = ""
   ) {
-    super([], origin);
+    super([], origin, parentId);
     this.type = type;
     this.nature = nature;
+
     const floor = this.extractGridData(gridData, "floor");
     const publicFields = this.extractGridData(gridData, "public");
     this.updateArea(publicFields.flat());
 
-    this.children.push(
-      new Floor(floor, origin + "_floor_" + Floor.floorCount++)
-    );
-    this.children.push(
-      new Public(
-        publicFields,
-        origin + "_public_" + Public.publicCount++,
-        origin
-      )
-    );
+    this.children.push(new Floor(floor, `${this.id}_floor`, this.id));
+    this.children.push(new Public(publicFields, `${this.id}_public`, this.id));
   }
 }

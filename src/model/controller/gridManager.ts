@@ -3,25 +3,13 @@ import { Grid, GridNature, GridType } from "../grid";
 
 export class DataStore {
   private grids: Grid[] = [];
-  private static gridCounts: Record<GridType, number> = {
-    input: 0,
-    output: 0,
-    unknown: 0,
-    // Add other types as needed
-  };
-
   addGrid(
     data: GridData,
     type: GridType,
     nature: GridNature,
     sampleId: string
   ): Grid {
-    const grid = new Grid(
-      data,
-      type,
-      nature,
-      `${sampleId}_${type}_${DataStore.gridCounts[type]++}`
-    );
+    const grid = new Grid(data, type, nature, `${sampleId}_${type}`);
     this.grids.push(grid);
     return grid;
   }
