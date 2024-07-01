@@ -8,6 +8,7 @@ import {
   StatProps,
   StatsArr,
   UnitData,
+  UnitDataWithId,
 } from "../types";
 
 export function processNodesStatsArr(arr: StatsArr): StatProps {
@@ -15,20 +16,22 @@ export function processNodesStatsArr(arr: StatsArr): StatProps {
   const lengthCounts: StatObject = {};
 
   for (const item of arr) {
-    const [color, length] = item;
+    const [color, length, id] = item;
 
     // Count occurrences for color
     if (colorCounts[color]) {
       colorCounts[color].length++;
+      colorCounts[color].items.push(id);
     } else {
-      colorCounts[color] = { length: 1 };
+      colorCounts[color] = { length: 1, items: [id] };
     }
 
     // Count occurrences for length
     if (lengthCounts[length]) {
       lengthCounts[length].length++;
+      lengthCounts[length].items.push(id);
     } else {
-      lengthCounts[length] = { length: 1 };
+      lengthCounts[length] = { length: 1, items: [id] };
     }
   }
 
@@ -37,6 +40,7 @@ export function processNodesStatsArr(arr: StatsArr): StatProps {
     length: lengthCounts,
   };
 }
+
 export function createDAG(obj: RawNodeTreeData): DAGNode {
   const root: DAGNode = { name: "root", index: 0, children: [], units: [] };
   const nodes: { [key: string]: DAGNode } = { root: root };
@@ -54,6 +58,7 @@ export function createDAG(obj: RawNodeTreeData): DAGNode {
       if (!nodes[nodeKey]) {
         const newNode: DAGNode = {
           name: nodeName as DAGNodes,
+          id: nodeKey,
           index: parseInt(index, 10),
           children: [],
           units: [],
@@ -95,9 +100,9 @@ export function aggregateTaskUnits(dag: DAGNode): {
 export function aggregateUnitsByGridType(
   obj: RawNodeTreeData,
   gridType: GridTypes = "input"
-): UnitData[][] {
+): UnitDataWithId[][] {
   const inputRegex = new RegExp(`${gridType}-(\\d+)`);
-  const result: UnitData[][] = [];
+  const result: UnitDataWithId[][] = [];
 
   for (const key in obj) {
     const match = key.match(inputRegex);
@@ -106,7 +111,7 @@ export function aggregateUnitsByGridType(
       if (!result[index]) {
         result[index] = [];
       }
-      result[index].push(...obj[key]);
+      result[index].push(...obj[key].map((unit) => [...unit, key]));
     }
   }
 

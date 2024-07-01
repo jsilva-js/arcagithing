@@ -42,9 +42,9 @@ export abstract class CompositeObject extends AreaGeometry {
     return classifyIslands(fields);
   }
 }
-
-class IDManager {
-  private static instanceMap = new Map<string, { count: number }>();
+export class IDManager {
+  private static countMap = new Map<string, { count: number }>();
+  private static instanceMap = new Map<string, CompositeObject>();
 
   static generateID(
     origin: string,
@@ -52,15 +52,24 @@ class IDManager {
     instance: CompositeObject
   ): void {
     const mapKey = `${parentId}_${origin}`;
-    if (!this.instanceMap.has(mapKey)) {
-      this.instanceMap.set(mapKey, { count: 0 });
+    if (!this.countMap.has(mapKey)) {
+      this.countMap.set(mapKey, { count: 0 });
     }
 
-    const entry = this.instanceMap.get(mapKey);
+    const entry = this.countMap.get(mapKey);
     if (entry) {
       instance.id = `${origin}-${entry.count++}`;
+      this.instanceMap.set(instance.id, instance);
     } else {
       throw new Error("Unable to generate ID");
     }
+  }
+
+  static getInstanceByID(id: string): CompositeObject | undefined {
+    return this.instanceMap.get(id);
+  }
+
+  static getAllInstances(): Map<string, CompositeObject> {
+    return this.instanceMap;
   }
 }

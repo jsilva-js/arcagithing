@@ -12,8 +12,8 @@ import { UnitsManager } from "../../grid/unit";
 export class ObjectStats {
   acc: StatsArr = [];
 
-  addStats(color: number, parts: number): void {
-    this.acc.push([color, parts]);
+  addStats(color: number, parts: number, id: string): void {
+    this.acc.push([color, parts, id]);
   }
 
   public processStatsProps(arr: StatsArr): StatProps {
@@ -40,6 +40,7 @@ export class ObjectStats {
     return aggregateUnitsByGridType(rawRagTree.unitsOrigin as {}, gridType);
   };
 }
+
 export class PrivateBody extends ObjectStats {
   nodes: Body[] = [];
 
@@ -60,5 +61,30 @@ export class PrivateBody extends ObjectStats {
   findPrivateBodies(grid: Grid): Body[] {
     this.findAll(grid);
     return this.nodes;
+  }
+
+  getPrivateBodiesStats(grids: Grid[], gridType: GridTypes): StatProps {
+    const nodes: Body[] = [];
+    const stats = new ObjectStats();
+
+    grids.forEach((grid: Grid) => {
+      const privateBodyAnalysis = new PrivateBody();
+      privateBodyAnalysis.findAll(grid);
+      nodes.push(...privateBodyAnalysis.nodes);
+    });
+
+    nodes.forEach((node) => {
+      stats.addStats(node.color, node.length, node.id);
+    });
+
+    stats.getAggregateUnitsByGridType(gridType).forEach((restUnits) => {
+      restUnits.forEach((unit) => {
+        stats.addStats(unit[2] as number, 1, unit[3] as string);
+      });
+    });
+    const statsProps = stats.processStatsProps(stats.acc);
+
+    console.log(statsProps);
+    return statsProps;
   }
 }

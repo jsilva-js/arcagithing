@@ -1,6 +1,7 @@
 export type Row = Digit[];
 export type Grid = Row[];
 export type UnitData = [number, number, number];
+export type UnitDataWithId = (string | number)[];
 export type AreaData = UnitData[];
 export type FieldsData = AreaData[];
 
@@ -68,6 +69,7 @@ export interface DAGNode {
   children: DAGNode[];
   units: UnitData[];
   index: number;
+  id?: string;
 }
 
 export type GridObjectTypes = Society | Periphery | City | Fragment | Floor;
@@ -160,9 +162,9 @@ type Digit = (number & { readonly brand: unique symbol }) | number;
 
 type Color = Digit;
 type AreaLength = number;
-export type StatsArr = [Color, AreaLength][]; // [color, length]
+export type StatsArr = [Color, AreaLength, string][]; // [color, length]
 export type StatPropName = "color" | "length";
-export type StatProp = { length: number };
+export type StatProp = { length: number; items: string[] };
 export type StatObject = { [key: number]: StatProp };
 
 export type StatProps = {
