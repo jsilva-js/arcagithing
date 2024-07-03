@@ -14,6 +14,10 @@ export class DataStore {
     return grid;
   }
 
+  getRootGrids() {
+    return this.grids;
+  }
+
   getGridsByNatureAndType(nature: GridNature, type: GridType): Grid[] {
     return this.grids.filter(
       (grid) => grid.nature === nature && grid.type === type

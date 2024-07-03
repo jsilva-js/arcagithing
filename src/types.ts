@@ -1,6 +1,8 @@
 export type Row = Digit[];
+export type RowIdx = [number, number][];
 export type Grid = Row[];
-export type UnitData = [number, number, number];
+export type GridIdx = RowIdx[];
+export type UnitData = [number, number, number, number, number];
 export type UnitDataWithId = (string | number)[];
 export type AreaData = UnitData[];
 export type FieldsData = AreaData[];
@@ -120,10 +122,12 @@ export type ConfigIslandSelector = (
   grid: Grid,
   config: IslandSelectorConfig[]
 ) => FieldsData;
+export type GridOriginIdx = { x: number; y: number };
 
 export type GetGridObjects = (
   grid: Grid,
-  config?: IslandSelectorConfig[]
+  config?: IslandSelectorConfig[],
+  origins?: GridOriginIdx
 ) => FieldsData;
 
 export type GroupFunction = (
@@ -138,7 +142,9 @@ export type FindIsland = (
   grid: Grid,
   isPartOfIsland: Function,
   units?: boolean,
-  floor?: boolean
+  floor?: boolean,
+  originX?: number,
+  originY?: number
 ) => FieldsData;
 
 export type TrainData = {
@@ -162,13 +168,19 @@ type Digit = (number & { readonly brand: unique symbol }) | number;
 
 type Color = Digit;
 type AreaLength = number;
-export type StatsArr = [Color, AreaLength, string][]; // [color, length]
 export type StatProp = { length: number; items: string[] };
-export type StatObject = { [key: number | string]: StatProp };
 
 export type StatPropName = "color" | "length" | "colorLength";
+
+export type StatObject = {
+  [key: string]: {
+    length: number;
+    items: { id: string; outArea: AreaData }[];
+  };
+};
 export type StatProps = {
   [key in StatPropName]: StatObject;
 };
+export type StatsArr = [number, number, string, AreaData][];
 
 export type GridTypes = "input" | "output";

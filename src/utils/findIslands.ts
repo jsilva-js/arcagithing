@@ -12,20 +12,30 @@ export const findIslands: FindIsland = (
   grid,
   isPartOfIsland,
   excludeUnits = false,
-  floor = false
+  floor = false,
+  originX = 0, // Add originX parameter
+  originY = 0 // Add originY parameter
 ) => {
   const visited = grid.map((row) => row.map(() => false));
   const islands = [];
 
   for (let x = 0; x < grid.length; x++) {
     for (let y = 0; y < grid[x].length; y++) {
-      // Determine if the current cell should start an island search
       const shouldStartIsland = floor ? grid[x][y] === 0 : grid[x][y] !== 0;
       if (!visited[x][y] && shouldStartIsland) {
-        const island = dfs(grid, x, y, visited, isPartOfIsland);
+        const island = dfs(
+          grid,
+          x,
+          y,
+          visited,
+          isPartOfIsland,
+          originX,
+          originY
+        );
         if (island.length > (excludeUnits ? 1 : 0)) {
-          // Map the island's coordinates to include values for easier debugging or further processing
-          islands.push(island.map(([ix, iy]) => [ix, iy, grid[ix][iy]]));
+          islands.push(
+            island.map(([ix, iy, ox, oy]) => [ix, iy, grid[ix][iy], ox, oy])
+          );
         }
       }
     }
@@ -33,7 +43,6 @@ export const findIslands: FindIsland = (
 
   return islands as FieldsData;
 };
-
 // extended: with diagonals included
 // public: different colors
 // private: same color

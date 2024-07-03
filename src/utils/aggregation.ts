@@ -17,31 +17,34 @@ export function processNodesStatsArr(arr: StatsArr): StatProps {
   const colorLengthCounts: StatObject = {};
 
   for (const item of arr) {
-    const [color, length, id] = item;
+    const [color, length, id, outArea] = item;
     const colorLengthKey = `${color}${length}`;
 
     // Count occurrences for color
     if (colorCounts[color]) {
       colorCounts[color].length++;
-      colorCounts[color].items.push(id);
+      colorCounts[color].items.push({ id, outArea });
     } else {
-      colorCounts[color] = { length: 1, items: [id] };
+      colorCounts[color] = { length: 1, items: [{ id, outArea }] };
     }
 
     // Count occurrences for length
     if (lengthCounts[length]) {
       lengthCounts[length].length++;
-      lengthCounts[length].items.push(id);
+      lengthCounts[length].items.push({ id, outArea });
     } else {
-      lengthCounts[length] = { length: 1, items: [id] };
+      lengthCounts[length] = { length: 1, items: [{ id, outArea }] };
     }
 
     // Count occurrences for colorLength
     if (colorLengthCounts[colorLengthKey]) {
       colorLengthCounts[colorLengthKey].length++;
-      colorLengthCounts[colorLengthKey].items.push(id);
+      colorLengthCounts[colorLengthKey].items.push({ id, outArea });
     } else {
-      colorLengthCounts[colorLengthKey] = { length: 1, items: [id] };
+      colorLengthCounts[colorLengthKey] = {
+        length: 1,
+        items: [{ id, outArea }],
+      };
     }
   }
 

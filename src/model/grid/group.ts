@@ -12,7 +12,7 @@ export class Group extends CompositeObject {
     const groupTypes: GridGroupTypes[] = ["public_body"];
 
     groupTypes.forEach((groupType) => {
-      const gridData = this.extractGridData(this.grid, groupType);
+      const gridData = this.extractGridData(this.grid, groupType, this.origin);
 
       gridData.forEach((area) => {
         if (area.length > 1) {

@@ -110,7 +110,7 @@ describe("Public", () => {
           sampl.addTrain(train.input, train.output);
         });
 
-        const inputStats = sampl.analyzeInputOutputConstraints();
+        const inputStats = sampl.analyzeInputConstraints()[0];
         console.log(inputStats);
       } catch (e) {
         console.log(e);

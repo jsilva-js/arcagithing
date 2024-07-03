@@ -33,8 +33,11 @@ export class Grid extends CompositeObject {
     this.type = type;
     this.nature = nature;
 
-    const floor = this.extractGridData(gridData, "floor");
-    const publicFields = this.extractGridData(gridData, "public");
+    const floor = this.extractGridData(gridData, "floor", { x: 0, y: 0 });
+    const publicFields = this.extractGridData(gridData, "public", {
+      x: 0,
+      y: 0,
+    });
     this.updateArea(publicFields.flat());
 
     this.children.push(new Floor(floor, `${this.id}_floor`, this.id));

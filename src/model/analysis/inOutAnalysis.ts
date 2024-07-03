@@ -3,18 +3,10 @@ import { Grid } from "../grid";
 import { PrivateBodyPattern } from "./grid/privateBody/pattern";
 
 export class InputOutputAnalysis extends AnalysisManager<Grid> {
-  privateBodyPattern: PrivateBodyPattern = new PrivateBodyPattern();
-
   gatherInputOutputConstraints() {
-    const output = AnalysisManager.privateAnalysis.output;
-    const input = AnalysisManager.privateAnalysis.input;
+    const inputs = this.getGridsByNatureAndType("train", "input");
+    const outputs = this.getGridsByNatureAndType("train", "output");
 
-    const privateBodyPattern =
-      this.privateBodyPattern.getColorAndLengthPrivateBodyPattern(
-        input,
-        output
-      );
-
-    return privateBodyPattern;
+    // return this.groupAndClassifyChangesByGridType(inputs, "input", outputs);
   }
 }

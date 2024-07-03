@@ -1,49 +1,12 @@
-import { GridTypes, StatProps, StatsArr, UnitData } from "../../../../types";
 import {
-  aggregateTaskUnits,
-  aggregateUnitsByGridType,
-  createDAG,
-  processNodesStatsArr,
-} from "../../../../utils/aggregation";
+  AreaData,
+  GridTypes,
+  StatProps,
+  UnitDataWithId,
+} from "../../../../types";
 import { Grid } from "../../../grid";
 import { Body } from "../../../grid/body";
-import { UnitsManager } from "../../../grid/unit";
-
-export class ObjectStats {
-  acc: StatsArr = [];
-
-  addStats(color: number, parts: number, id: string): void {
-    this.acc.push([color, parts, id]);
-  }
-
-  public processStatsProps(arr: StatsArr): StatProps {
-    return processNodesStatsArr(arr);
-  }
-
-  public dagStats(dagData: { [key: string]: UnitData[] }) {
-    return createDAG(dagData);
-  }
-
-  public getUnitsDag = () => {
-    const units = UnitsManager.getInstance();
-    return this.dagStats(units.unitsOrigin as {});
-  };
-
-  public getAggregateUnits = () => {
-    const dag = this.getUnitsDag();
-    return aggregateTaskUnits(dag);
-  };
-
-  public getAggregateUnitsByGridType = (gridType: GridTypes, idx: string) => {
-    const rawRagTree = UnitsManager.getInstance();
-
-    return aggregateUnitsByGridType(
-      rawRagTree.unitsOrigin as {},
-      gridType,
-      idx
-    );
-  };
-}
+import { ObjectStats } from "../stats";
 
 export class PrivateBody extends ObjectStats {
   nodes: Body[] = [];
@@ -67,33 +30,86 @@ export class PrivateBody extends ObjectStats {
     return this.nodes;
   }
 
-  getPrivateBodiesStats(grids: Grid[], gridType: GridTypes): StatProps[] {
-    const result: StatProps[] = [];
-    grids.forEach((grid: Grid, i) => {
-      result.push(this.getPrivateBodyStats(grid, gridType, i.toString()));
-    });
-
+  getConstraints(grids: Grid[], gridType: GridTypes) {
+    const result = this.findPrivateBodies(grids[0]);
     return result;
   }
-  getPrivateBodyStats(grid: Grid, gridType: GridTypes, idx: string): StatProps {
-    const nodes: Body[] = [];
-    const stats = new ObjectStats();
 
-    const privateBodyAnalysis = new PrivateBody();
-    privateBodyAnalysis.findAll(grid);
-    nodes.push(...privateBodyAnalysis.nodes);
+  // getPrivateBodiesStats(
+  //   grids: Grid[],
+  //   gridType: GridTypes,
+  //   outGrids?: Grid[]
+  // ): StatProps[] {
+  //   const result: StatProps[] = [];
+  //   grids.forEach((grid: Grid, i) => {
+  //     result.push(
+  //       this.getPrivateBodyStats(
+  //         grid,
+  //         gridType,
+  //         i.toString(),
+  //         outGrids ? outGrids[i] : undefined
+  //       )
+  //     );
+  //   });
 
-    nodes.forEach((node) => {
-      stats.addStats(node.color, node.length, node.id);
-    });
+  //   return result;
+  // }
 
-    stats.getAggregateUnitsByGridType(gridType, idx).forEach((restUnit) => {
-      stats.addStats(restUnit[2] as number, 1, restUnit[3] as string);
-    });
+  // getPrivateBodyStats(
+  //   grid: Grid,
+  //   gridType: GridTypes,
+  //   idx: string,
+  //   outGrid?: Grid
+  // ): StatProps {
+  //   const nodes: Body[] = [];
+  //   const stats = new ObjectStats();
 
-    const statsProps = stats.processStatsProps(stats.acc);
+  //   const privateBodyAnalysis = new PrivateBody();
+  //   privateBodyAnalysis.findAll(grid);
+  //   nodes.push(...privateBodyAnalysis.nodes);
 
-    console.log("gridType", gridType, statsProps);
-    return statsProps;
-  }
+  //   nodes.forEach((node) => {
+  //     if (outGrid) {
+  //       const outArea = this.mirrorArea(node.area, outGrid.area);
+  //       stats.addStatsWithOutArea(node.color, node.length, node.id, outArea);
+  //     } else {
+  //       stats.addStats(node.color, node.length, node.id);
+  //     }
+  //   });
+
+  //   stats.getAggregateUnitsByGridType(gridType, idx).forEach((restUnit) => {
+  //     if (outGrid) {
+  //       const unitArea = this.getUnitAreaFromId(restUnit[3] as string);
+  //       const outArea = this.mirrorArea(unitArea, outGrid.area);
+  //       stats.addStatsWithOutArea(
+  //         restUnit[2] as number,
+  //         1,
+  //         restUnit[3] as string,
+  //         outArea
+  //       );
+  //     } else {
+  //       stats.addStats(restUnit[2] as number, 1, restUnit[3] as string);
+  //     }
+  //   });
+
+  //   const statsProps = stats.processStatsProps(stats.acc);
+
+  //   console.log("gridType", gridType, statsProps);
+  //   return statsProps;
+  // }
+
+  // private mirrorArea(area: AreaData, outGridArea: AreaData): AreaData {
+  //   // Determine the dimensions of the outGridArea
+  //   const maxX = Math.max(...outGridArea.map((unit) => unit[0]));
+  //   const maxY = Math.max(...outGridArea.map((unit) => unit[1]));
+
+  //   // Mirror the area within the bounds of the outGridArea
+  //   return area.map(([x, y, color]) => [maxX - x, maxY - y, color]);
+  // }
+
+  // private getUnitAreaFromId(id: string): AreaData {
+  //   // Placeholder function to get the unit area from its ID
+  //   // Implement the actual logic to retrieve the area data for the unit
+  //   return [];
+  // }
 }

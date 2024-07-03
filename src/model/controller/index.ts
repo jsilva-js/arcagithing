@@ -51,6 +51,10 @@ export class Sample {
     return inputs.map((input, index) => [input, outputs[index]]) as [];
   }
 
+  getRootGrids() {
+    return this.dataStore.getRootGrids();
+  }
+
   analyzeInputConstraints() {
     return this.inputAnalysis.gatherInputConstraints();
   }

@@ -2,6 +2,7 @@ import {
   AreaData,
   FieldsData,
   Grid,
+  GridOriginIdx,
   IslandClasses,
   IslandClassesOutput,
   UnitData,
@@ -29,8 +30,12 @@ export abstract class CompositeObject extends AreaGeometry {
     IDManager.generateID(origin, parentId, this);
   }
 
-  extractGridData(grid: Grid, group: AvailableSelectors): FieldsData {
-    return getGridObjects(grid, groups[group]);
+  extractGridData(
+    grid: Grid,
+    group: AvailableSelectors,
+    origins: GridOriginIdx
+  ): FieldsData {
+    return getGridObjects(grid, groups[group], origins);
   }
 
   classifyIslandData(grid: Grid): IslandClasses {

@@ -16,7 +16,7 @@ export class Body extends CompositeObject {
       return;
     }
 
-    const parts = this.extractGridData(this.grid, "private_body");
+    const parts = this.extractGridData(this.grid, "private_body", this.origin);
 
     parts.forEach((part) => {
       if (part.length > 1) {
