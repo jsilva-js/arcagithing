@@ -111,7 +111,7 @@ describe("Public", () => {
         });
 
         const inputStats = sampl.analyzeInputOutputConstraints();
-        console.log(JSON.stringify(inputStats, null, 2));
+        console.log(inputStats);
       } catch (e) {
         console.log(e);
       }

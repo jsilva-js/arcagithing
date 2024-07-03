@@ -14,9 +14,11 @@ import {
 export function processNodesStatsArr(arr: StatsArr): StatProps {
   const colorCounts: StatObject = {};
   const lengthCounts: StatObject = {};
+  const colorLengthCounts: StatObject = {};
 
   for (const item of arr) {
     const [color, length, id] = item;
+    const colorLengthKey = `${color}${length}`;
 
     // Count occurrences for color
     if (colorCounts[color]) {
@@ -33,11 +35,20 @@ export function processNodesStatsArr(arr: StatsArr): StatProps {
     } else {
       lengthCounts[length] = { length: 1, items: [id] };
     }
+
+    // Count occurrences for colorLength
+    if (colorLengthCounts[colorLengthKey]) {
+      colorLengthCounts[colorLengthKey].length++;
+      colorLengthCounts[colorLengthKey].items.push(id);
+    } else {
+      colorLengthCounts[colorLengthKey] = { length: 1, items: [id] };
+    }
   }
 
   return {
     color: colorCounts,
     length: lengthCounts,
+    colorLength: colorLengthCounts,
   };
 }
 
@@ -101,18 +112,14 @@ export function aggregateUnitsByGridType(
   obj: RawNodeTreeData,
   gridType: GridTypes = "input",
   idx: string
-): UnitDataWithId[][] {
+): UnitDataWithId[] {
   const inputRegex = new RegExp(`${gridType}-${idx}`);
-  const result: UnitDataWithId[][] = [];
+  const result: UnitDataWithId[] = [];
 
   for (const key in obj) {
     const match = key.match(inputRegex);
     if (match) {
-      const index = parseInt(match[1], 10);
-      if (!result[index]) {
-        result[index] = [];
-      }
-      result[index].push(...obj[key].map((unit) => [...unit, key]));
+      result.push(...obj[key].map((unit) => [...unit, key]));
     }
   }
 

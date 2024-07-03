@@ -1,13 +1,13 @@
-import { GridTypes, StatProps, StatsArr, UnitData } from "../../../types";
+import { GridTypes, StatProps, StatsArr, UnitData } from "../../../../types";
 import {
   aggregateTaskUnits,
   aggregateUnitsByGridType,
   createDAG,
   processNodesStatsArr,
-} from "../../../utils/aggregation";
-import { Grid } from "../../grid";
-import { Body } from "../../grid/body";
-import { UnitsManager } from "../../grid/unit";
+} from "../../../../utils/aggregation";
+import { Grid } from "../../../grid";
+import { Body } from "../../../grid/body";
+import { UnitsManager } from "../../../grid/unit";
 
 export class ObjectStats {
   acc: StatsArr = [];
@@ -87,14 +87,13 @@ export class PrivateBody extends ObjectStats {
       stats.addStats(node.color, node.length, node.id);
     });
 
-    stats.getAggregateUnitsByGridType(gridType, idx).forEach((restUnits) => {
-      restUnits.forEach((unit) => {
-        stats.addStats(unit[2] as number, 1, unit[3] as string);
-      });
+    stats.getAggregateUnitsByGridType(gridType, idx).forEach((restUnit) => {
+      stats.addStats(restUnit[2] as number, 1, restUnit[3] as string);
     });
+
     const statsProps = stats.processStatsProps(stats.acc);
 
-    console.log(statsProps);
+    console.log("gridType", gridType, statsProps);
     return statsProps;
   }
 }

@@ -163,10 +163,10 @@ type Digit = (number & { readonly brand: unique symbol }) | number;
 type Color = Digit;
 type AreaLength = number;
 export type StatsArr = [Color, AreaLength, string][]; // [color, length]
-export type StatPropName = "color" | "length";
 export type StatProp = { length: number; items: string[] };
-export type StatObject = { [key: number]: StatProp };
+export type StatObject = { [key: number | string]: StatProp };
 
+export type StatPropName = "color" | "length" | "colorLength";
 export type StatProps = {
   [key in StatPropName]: StatObject;
 };
