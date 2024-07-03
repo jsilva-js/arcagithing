@@ -18,17 +18,18 @@ export class AnalysisManager<T extends Grid> extends GridManager<T> {
     return privateBodyConstraints;
   }
 
-  // groupAndClassifyChangesByGridType(
-  //   grids: Grid[],
-  //   gridType: GridTypes,
-  //   outGrids?: Grid[]
-  // ): void {
-  //   const privateBodyAnalysis = new PrivateBody().getPrivateBodiesStats(
-  //     grids,
-  //     gridType,
-  //     outGrids
-  //   );
-  //   // const al = IDManager.getAllInstances();
-  //   AnalysisManager.privateAnalysis[gridType].push(...privateBodyAnalysis);
-  // }
+  groupAndClassifyChangesByGridType(
+    grids: Grid[],
+    gridType: GridTypes,
+    outGrids?: Grid[]
+  ) {
+    const privateBodyAnalysis = new PrivateBody().getPrivateBodiesStats(
+      grids,
+      gridType,
+      outGrids
+    );
+    // const al = IDManager.getAllInstances();
+    AnalysisManager.privateAnalysis[gridType].push(...privateBodyAnalysis);
+    return privateBodyAnalysis;
+  }
 }

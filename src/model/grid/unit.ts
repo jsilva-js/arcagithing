@@ -1,8 +1,8 @@
-import { RawNodeTreeData, UnitData } from "../../types";
+import { AreaData, RawNodeTreeData, UnitData } from "../../types";
 
 export class UnitsManager {
   private static instance: UnitsManager;
-  public unitsOrigin: RawNodeTreeData = {};
+  public unitsOrigin: Map<string, AreaData> = new Map(); // Use a Map for unitsOrigin
 
   private constructor() {}
 
@@ -13,11 +13,19 @@ export class UnitsManager {
     return UnitsManager.instance;
   }
 
+  public getAreaById(id: string): AreaData | undefined {
+    return this.unitsOrigin.get(id);
+  }
+
+  public setAreaById(id: string, area: AreaData): void {
+    this.unitsOrigin.set(id, area);
+  }
+
   public addUnit(unit: UnitData, groupType: string): void {
-    if (!this.unitsOrigin[groupType]) {
-      this.unitsOrigin[groupType] = [];
+    if (!this.unitsOrigin.has(groupType)) {
+      this.unitsOrigin.set(groupType, []);
     }
-    this.unitsOrigin[groupType]?.push(unit);
+    this.unitsOrigin.get(groupType)?.push(unit);
   }
 }
 
@@ -30,6 +38,8 @@ abstract class UnitsGroup {
 export class Unit extends UnitsGroup {
   x: number = 0;
   y: number = 0;
+  gx: number = 0;
+  gy: number = 0;
   color: number = 0;
   children: Unit[] = [];
   constructor(unit: UnitData, groupType: string) {
@@ -37,5 +47,7 @@ export class Unit extends UnitsGroup {
     this.x = unit[0];
     this.y = unit[1];
     this.color = unit[2];
+    this.gx = unit[3];
+    this.gy = unit[4];
   }
 }

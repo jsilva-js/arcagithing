@@ -12,6 +12,8 @@ import {
   processNodesStatsArr,
 } from "../../../utils/aggregation";
 import { UnitsManager } from "../../grid/unit";
+const mapToObject = (map: Map<string, any>) =>
+  Object.fromEntries(map.entries());
 
 export class ObjectStats {
   acc: StatsArr = [];
@@ -51,7 +53,7 @@ export class ObjectStats {
     const rawRagTree = UnitsManager.getInstance();
 
     return aggregateUnitsByGridType(
-      rawRagTree.unitsOrigin as {},
+      mapToObject(rawRagTree.unitsOrigin) as {},
       gridType,
       idx
     );

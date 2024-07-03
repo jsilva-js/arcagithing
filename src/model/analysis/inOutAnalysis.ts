@@ -6,7 +6,7 @@ export class InputOutputAnalysis extends AnalysisManager<Grid> {
   gatherInputOutputConstraints() {
     const inputs = this.getGridsByNatureAndType("train", "input");
     const outputs = this.getGridsByNatureAndType("train", "output");
-
-    // return this.groupAndClassifyChangesByGridType(inputs, "input", outputs);
+    console.log({ outputs });
+    return this.groupAndClassifyChangesByGridType(inputs, "input", outputs);
   }
 }
