@@ -1,5 +1,6 @@
 import {
   AreaData,
+  AreaDataWithMirroredOutput,
   GridTypes,
   StatProps,
   UnitDataWithId,
@@ -71,7 +72,7 @@ export class PrivateBody extends ObjectStats {
 
     nodes.forEach((node) => {
       if (outGrid) {
-        const outArea = this.mirrorArea(node.area, outGrid.area);
+        const outArea = this.mirrorArea(node.area, outGrid);
         stats.addStatsWithOutArea(node.color, node.length, node.id, outArea);
       } else {
         stats.addStats(node.color, node.length, node.id);
@@ -80,12 +81,12 @@ export class PrivateBody extends ObjectStats {
 
     stats.getAggregateUnitsByGridType(gridType, idx).forEach((restUnit) => {
       if (outGrid) {
-        const outArea = this.mirrorArea([restUnit] as AreaData, outGrid.area);
+        const area = this.mirrorArea([restUnit] as AreaData, outGrid);
         stats.addStatsWithOutArea(
           restUnit[2] as number,
           1,
           restUnit[3] as string,
-          outArea
+          area
         );
       } else {
         stats.addStats(restUnit[2] as number, 1, restUnit[3] as string);
@@ -98,23 +99,20 @@ export class PrivateBody extends ObjectStats {
     return statsProps;
   }
 
-  private mirrorArea(area: AreaData, outGridArea: AreaData): AreaData {
-    // Determine the dimensions of the outGridArea
-    const maxX = Math.max(...outGridArea.map((unit) => unit[0]));
-    const maxY = Math.max(...outGridArea.map((unit) => unit[1]));
+  private mirrorArea(
+    area: AreaData,
+    outGrid: Grid
+  ): AreaDataWithMirroredOutput {
+    const grid = outGrid.grid;
 
     // Mirror the area within the bounds of the outGridArea, keeping original coordinates
     return area.map(([x, y, color, originalX, originalY]) => [
-      maxX - x,
-      maxY - y,
+      x,
+      y,
       color,
       originalX,
       originalY,
+      Number(grid[originalX][originalY]),
     ]);
-  }
-
-  private getUnitAreaFromId(id: string): AreaData | undefined {
-    // Use the UnitDataManager to retrieve the area data for the unit
-    return UnitsManager.getInstance().getAreaById(id);
   }
 }

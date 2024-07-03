@@ -32,6 +32,7 @@
 // body = [public_body] >= [private_body]
 // limb = [public_limb] >= [private_limb]
 // private_group = [private_body + private_limb]
+
 import { Grid } from "./model/grid/";
 import { AreaGeometry } from "./model/grid/area";
 import { Body } from "./model/grid/body";

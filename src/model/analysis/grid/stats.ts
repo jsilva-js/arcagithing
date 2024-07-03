@@ -1,9 +1,11 @@
 import {
   AreaData,
+  AreaDataWithMirroredOutput,
   GridTypes,
   StatProps,
   StatsArr,
   UnitData,
+  UnitDataWithMirroredOutput,
 } from "../../../types";
 import {
   aggregateTaskUnits,
@@ -26,9 +28,9 @@ export class ObjectStats {
     color: number,
     parts: number,
     id: string,
-    outArea: AreaData
+    area: AreaDataWithMirroredOutput
   ): void {
-    this.acc.push([color, parts, id, outArea]);
+    this.acc.push([color, parts, id, area]);
   }
 
   public processStatsProps(arr: StatsArr): StatProps {

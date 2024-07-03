@@ -3,8 +3,17 @@ export type RowIdx = [number, number][];
 export type Grid = Row[];
 export type GridIdx = RowIdx[];
 export type UnitData = [number, number, number, number, number];
+export type UnitDataWithMirroredOutput = [
+  number,
+  number,
+  number,
+  number,
+  number,
+  number
+];
 export type UnitDataWithId = (string | number)[];
 export type AreaData = UnitData[];
+export type AreaDataWithMirroredOutput = UnitDataWithMirroredOutput[];
 export type FieldsData = AreaData[];
 
 export type AllFieldsData = {
@@ -175,12 +184,17 @@ export type StatPropName = "color" | "length" | "colorLength";
 export type StatObject = {
   [key: string]: {
     length: number;
-    items: { id: string; outArea: AreaData }[];
+    items: { id: string; area: AreaData | AreaDataWithMirroredOutput }[];
   };
 };
 export type StatProps = {
   [key in StatPropName]: StatObject;
 };
-export type StatsArr = [number, number, string, AreaData][];
+export type StatsArr = [
+  number,
+  number,
+  string,
+  AreaData | AreaDataWithMirroredOutput
+][];
 
 export type GridTypes = "input" | "output";
