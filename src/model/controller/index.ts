@@ -56,7 +56,9 @@ export class Sample {
   }
 
   analyzeInputConstraints() {
-    return this.inputAnalysis.gatherInputConstraints();
+    const inputReport = this.inputAnalysis.inputReport();
+
+    return inputReport;
   }
 
   analyzeOutputConstraints() {

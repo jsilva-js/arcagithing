@@ -37,11 +37,8 @@ export class AnalysisManager<T extends Grid> extends GridManager<T> {
     return privateBodyAnalysis;
   }
 
-  getInputsPrivates(grids: Grid[], gridType: GridTypes) {
-    const privateBodyAnalysis = new PrivateObjects().getAllPrivates(
-      grids,
-      gridType
-    );
+  getPrivates(grids: Grid[]) {
+    const privateBodyAnalysis = new PrivateObjects().getAllPrivates(grids);
     // const al = IDManager.getAllInstances();
     return privateBodyAnalysis;
   }

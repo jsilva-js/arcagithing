@@ -8,11 +8,12 @@ import {
 import { Grid } from "../../../grid";
 import { Body } from "../../../grid/body";
 import { Group } from "../../../grid/group";
+import { Limb } from "../../../grid/limb";
 import { UnitsManager } from "../../../grid/unit";
 import { ObjectStats } from "../stats";
 
 export class PrivateObjects extends ObjectStats {
-  nodes: Body[] = [];
+  nodes: (Body | Limb | Group)[] = [];
 
   constructor() {
     super();
@@ -28,13 +29,13 @@ export class PrivateObjects extends ObjectStats {
     }
   }
 
-  findPrivateObjects(grid: Grid): Body[] {
+  findPrivateObjects(grid: Grid): (Body | Limb | Group)[] {
     this.nodes = [];
     this.findAll(grid);
     return this.nodes;
   }
 
-  getAllPrivates(grids: Grid[], gridType: GridTypes) {
+  getAllPrivates(grids: Grid[]) {
     const result = grids.map((grid) => this.findPrivateObjects(grid));
     return result;
   }
