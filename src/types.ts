@@ -175,21 +175,32 @@ export type DataSets = {
 
 type Digit = (number & { readonly brand: unique symbol }) | number;
 
-type Color = Digit;
-type AreaLength = number;
-export type StatProp = { length: number; items: string[] };
+export type StatProp = {
+  length: number;
+  items: { id: string; area: AreaDataWithMirroredOutput | AreaData }[];
+};
 
 export type StatPropName = "color" | "length" | "colorLength";
 
 export type StatObject = {
-  [key: string]: {
-    length: number;
-    items: { id: string; area: AreaData | AreaDataWithMirroredOutput }[];
-  };
+  [key: string]: StatProp;
 };
+
 export type StatProps = {
   [key in StatPropName]: StatObject;
 };
+
+export interface Difference {
+  removed: StatObject;
+  added: StatObject;
+  changed: {
+    [key: string]: {
+      input: StatProp;
+      output: StatProp;
+    };
+  };
+}
+
 export type StatsArr = [
   number,
   number,

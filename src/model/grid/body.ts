@@ -3,16 +3,12 @@ import { CompositeObject } from "./core";
 import { Unit } from "./unit";
 
 export class Body extends CompositeObject {
-  color: number = -1;
   children: (Body | Unit)[] = [];
 
   constructor(area: AreaData, origin: string, parentId: string) {
     super(area, origin, parentId);
 
-    const isThisPrivate = area.every((unit) => unit[2] === area[0][2]);
-
-    if (isThisPrivate) {
-      this.color = area[0][2];
+    if (this.setColorIfPrivate(area)) {
       return;
     }
 

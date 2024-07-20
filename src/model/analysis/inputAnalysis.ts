@@ -6,7 +6,10 @@ import { Pattern } from "./pattern";
 export class InputAnalysis extends AnalysisManager<GridInput> {
   gatherInputConstraints() {
     const inputs = this.getGridsByNatureAndType("train", "input");
-    return this.getConstraints(inputs, "input");
+    const sizes = this.getGridSizes(inputs);
+    // 1. grid sizes
+    // 2. public bodies
+    return sizes;
   }
 }
 

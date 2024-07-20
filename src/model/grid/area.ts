@@ -8,11 +8,25 @@ export abstract class AreaGeometry {
   grid: Grid = [];
   area: AreaData = [];
   origin: GridOriginIdx = { x: 0, y: 0 };
+  color: number = -1;
 
   constructor(area: AreaData) {
     if (area.length) {
       this.updateArea(area);
     }
+  }
+
+  setColorIfPrivate(area: AreaData) {
+    if (area.length > 1 && this.isThisPrivate(area)) {
+      this.color = area[0][2];
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  isThisPrivate(area: AreaData) {
+    return area.every((unit) => unit[2] === area[0][2]);
   }
 
   updateArea(area: AreaData) {

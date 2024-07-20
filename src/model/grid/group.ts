@@ -9,7 +9,11 @@ export class Group extends CompositeObject {
 
   constructor(units: UnitData[], origin: string, parentId: string) {
     super(units, origin, parentId);
+
     const groupTypes: GridGroupTypes[] = ["public_body"];
+    if (this.setColorIfPrivate(units)) {
+      return;
+    }
 
     groupTypes.forEach((groupType) => {
       const gridData = this.extractGridData(this.grid, groupType, this.origin);

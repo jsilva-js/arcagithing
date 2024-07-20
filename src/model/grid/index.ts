@@ -38,7 +38,7 @@ export class Grid extends CompositeObject {
       x: 0,
       y: 0,
     });
-    this.updateArea(publicFields.flat());
+    this.updateArea([...publicFields.flat(), ...floor.flat()]);
 
     this.children.push(new Floor(floor, `${this.id}_floor`, this.id));
     this.children.push(new Public(publicFields, `${this.id}_public`, this.id));

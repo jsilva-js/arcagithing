@@ -7,10 +7,11 @@ import {
 } from "../../../../types";
 import { Grid } from "../../../grid";
 import { Body } from "../../../grid/body";
+import { Group } from "../../../grid/group";
 import { UnitsManager } from "../../../grid/unit";
 import { ObjectStats } from "../stats";
 
-export class PrivateBody extends ObjectStats {
+export class PrivateObjects extends ObjectStats {
   nodes: Body[] = [];
 
   constructor() {
@@ -18,7 +19,7 @@ export class PrivateBody extends ObjectStats {
   }
 
   public findAll(node: any): void {
-    if (node instanceof Body && !node.children.length) {
+    if (!node.children.length && node.color !== -1 && node.length > 1) {
       this.nodes.push(node);
     }
 
@@ -27,13 +28,14 @@ export class PrivateBody extends ObjectStats {
     }
   }
 
-  findPrivateBodies(grid: Grid): Body[] {
+  findPrivateObjects(grid: Grid): Body[] {
+    this.nodes = [];
     this.findAll(grid);
     return this.nodes;
   }
 
-  getConstraints(grids: Grid[], gridType: GridTypes) {
-    const result = grids.map((grid) => this.findPrivateBodies(grid));
+  getAllPrivates(grids: Grid[], gridType: GridTypes) {
+    const result = grids.map((grid) => this.findPrivateObjects(grid));
     return result;
   }
 
@@ -66,7 +68,7 @@ export class PrivateBody extends ObjectStats {
     const nodes: Body[] = [];
     const stats = new ObjectStats();
 
-    const privateBodyAnalysis = new PrivateBody();
+    const privateBodyAnalysis = new PrivateObjects();
     privateBodyAnalysis.findAll(grid);
     nodes.push(...privateBodyAnalysis.nodes);
 
@@ -95,7 +97,6 @@ export class PrivateBody extends ObjectStats {
 
     const statsProps = stats.processStatsProps(stats.acc);
 
-    console.log("gridType", gridType, statsProps);
     return statsProps;
   }
 
@@ -104,7 +105,7 @@ export class PrivateBody extends ObjectStats {
     outGrid: Grid
   ): AreaDataWithMirroredOutput {
     const grid = outGrid.grid;
-
+    console.log(area, outGrid);
     // Mirror the area within the bounds of the outGridArea, keeping original coordinates
     return area.map(([x, y, color, originalX, originalY]) => [
       x,
@@ -112,7 +113,7 @@ export class PrivateBody extends ObjectStats {
       color,
       originalX,
       originalY,
-      Number(grid[originalX][originalY]),
+      Number(grid[originalX] && grid[originalX][originalY]) || -1,
     ]);
   }
 }
