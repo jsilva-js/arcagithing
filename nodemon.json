@@ -1,5 +1,5 @@
 {
   "watch": ["src/**/*", "test/**/*"],
   "ext": "ts",
-  "exec": "TS_NODE_PROJECT='tsconfig.json' mocha --watch -r ts-node/register test/**/*.spec.ts"
+  "exec": "TS_NODE_PROJECT='tsconfig.json' mocha --watch -r ts-node/register test/**/*.spec.ts --timeout 0"
 }

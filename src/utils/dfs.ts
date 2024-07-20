@@ -5,7 +5,9 @@ export function dfs(
   x: number,
   y: number,
   visited: Visisted,
-  isPartOfIsland: Function
+  isPartOfIsland: Function,
+  originX: number, // Add originX parameter
+  originY: number // Add originY parameter
 ) {
   const directions = [
     [1, 0],
@@ -23,7 +25,7 @@ export function dfs(
     const [cx, cy] = stack.pop() as number[];
     if (visited[cx][cy]) continue;
     visited[cx][cy] = true;
-    island.push([cx, cy]);
+    island.push([cx, cy, originX + cx, originY + cy]); // Include the root grid coordinates
     directions.forEach(([dx, dy]) => {
       const nx = cx + dx,
         ny = cy + dy;

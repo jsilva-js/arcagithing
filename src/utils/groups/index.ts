@@ -1,4 +1,4 @@
-import { GetGridObjects, IslandsTypes } from "../../types";
+import { GetGridObjects, GridOriginIdx, IslandsTypes } from "../../types";
 import { findIslands, configIslandSelector } from "../findIslands";
 
 // grid = floor + public
@@ -71,7 +71,7 @@ export const groups: IslandsTypes = {
   ],
 };
 
-export const getGridObjects: GetGridObjects = (grid, config) => {
+export const getGridObjects: GetGridObjects = (grid, config, origins) => {
   if (!config?.length) {
     return [];
   }
@@ -82,7 +82,9 @@ export const getGridObjects: GetGridObjects = (grid, config) => {
         grid,
         configIslandSelector(cfg.selectors),
         cfg.excludeUnits,
-        cfg.floor
+        cfg.floor,
+        origins?.x,
+        origins?.y
       )
     )
     .flat();

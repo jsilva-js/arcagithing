@@ -1,7 +1,19 @@
 export type Row = Digit[];
+export type RowIdx = [number, number][];
 export type Grid = Row[];
-export type UnitData = [number, number, Digit];
+export type GridIdx = RowIdx[];
+export type UnitData = [number, number, number, number, number];
+export type UnitDataWithMirroredOutput = [
+  number,
+  number,
+  number,
+  number,
+  number,
+  number
+];
+export type UnitDataWithId = (string | number)[];
 export type AreaData = UnitData[];
+export type AreaDataWithMirroredOutput = UnitDataWithMirroredOutput[];
 export type FieldsData = AreaData[];
 
 export type AllFieldsData = {
@@ -54,6 +66,23 @@ export type City = "limb" | "body";
 export type Fragment = "fragment";
 export type Floor = "floor";
 
+export type DAGNodes =
+  | "input"
+  | "output"
+  | "public"
+  | "group"
+  | "body"
+  | "piece"
+  | "root"
+  | string;
+export interface DAGNode {
+  name: DAGNodes;
+  children: DAGNode[];
+  units: UnitData[];
+  index: number;
+  id?: string;
+}
+
 export type GridObjectTypes = Society | Periphery | City | Fragment | Floor;
 
 export type CombinedType = `${Society}_${Periphery | City}`;
@@ -63,10 +92,12 @@ export type IslandsTypes = {
   [key in GridObjectTypes | CombinedType]?: IslandSelectorConfig[];
 };
 
+export type RawNodeTreeData = { [key: string]: UnitData[] };
+
 export type IslandClasses = "group" | "body" | "limb" | "unit" | "incomplete";
 
 export type IslandClassObject = {
-  area: AreaData | UnitData[];
+  area: UnitData[];
   islandGrid: Grid;
   islandClass: IslandClasses;
 };
@@ -100,10 +131,12 @@ export type ConfigIslandSelector = (
   grid: Grid,
   config: IslandSelectorConfig[]
 ) => FieldsData;
+export type GridOriginIdx = { x: number; y: number };
 
 export type GetGridObjects = (
   grid: Grid,
-  config?: IslandSelectorConfig[]
+  config?: IslandSelectorConfig[],
+  origins?: GridOriginIdx
 ) => FieldsData;
 
 export type GroupFunction = (
@@ -118,7 +151,9 @@ export type FindIsland = (
   grid: Grid,
   isPartOfIsland: Function,
   units?: boolean,
-  floor?: boolean
+  floor?: boolean,
+  originX?: number,
+  originY?: number
 ) => FieldsData;
 
 export type TrainData = {
@@ -139,3 +174,38 @@ export type DataSets = {
 };
 
 type Digit = (number & { readonly brand: unique symbol }) | number;
+
+export type StatProp = {
+  length: number;
+  items: { id: string; area: AreaDataWithMirroredOutput | AreaData }[];
+};
+
+export type StatPropName = "color" | "length" | "colorLength";
+
+export type StatObject = {
+  [key: string]: StatProp;
+};
+
+export type StatProps = {
+  [key in StatPropName]: StatObject;
+};
+
+export interface Difference {
+  removed: StatObject;
+  added: StatObject;
+  changed: {
+    [key: string]: {
+      input: StatProp;
+      output: StatProp;
+    };
+  };
+}
+
+export type StatsArr = [
+  number,
+  number,
+  string,
+  AreaData | AreaDataWithMirroredOutput
+][];
+
+export type GridTypes = "input" | "output";

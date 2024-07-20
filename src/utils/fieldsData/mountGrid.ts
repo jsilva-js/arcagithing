@@ -1,8 +1,8 @@
-import { AreaData, Grid } from "../../types";
+import { AreaData, Grid, GridIdx } from "../../types";
 
-export const mountGrid = (area: AreaData): Grid => {
+export const mountGrid = (area: AreaData): { grid: Grid; gridIdx: GridIdx } => {
   if (area.length === 0) {
-    return []; // Return an empty grid if no data
+    return { grid: [], gridIdx: [] }; // Return an empty grid if no data
   }
 
   let minX = Infinity;
@@ -23,11 +23,15 @@ export const mountGrid = (area: AreaData): Grid => {
 
   // Initialize the grid with zeros or a default value indicating empty
   const grid = Array.from({ length: width }, () => Array(height).fill(0));
+  const gridIdx = Array.from({ length: width }, () =>
+    Array(height).fill([0, 0])
+  );
 
   // Populate the grid based on adjusted coordinates
-  area.forEach(([x, y, color]) => {
+  area.forEach(([x, y, color, gx, gy]) => {
     grid[x - minX][y - minY] = color;
+    gridIdx[x - minX][y - minY] = [gx, gy];
   });
 
-  return grid;
+  return { grid, gridIdx };
 };

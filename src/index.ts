@@ -32,6 +32,7 @@
 // body = [public_body] >= [private_body]
 // limb = [public_limb] >= [private_limb]
 // private_group = [private_body + private_limb]
+<<<<<<< HEAD
 import { Grid } from "./model/grid";
 import { AreaGeometry } from "./model/area";
 import { Body } from "./model/body";
@@ -43,6 +44,18 @@ import { Public } from "./model/public";
 import { SemiGroup } from "./model/semigroup";
 import { Unit } from "./model/unit";
 import { UnitsManager } from "./model/unit";
+=======
+
+import { Grid } from "./model/grid/";
+import { AreaGeometry } from "./model/grid/area";
+import { Body } from "./model/grid/body";
+import { CompositeObject } from "./model/grid/core";
+import { Floor } from "./model/grid/floor";
+import { Group } from "./model/grid/group";
+import { Public } from "./model/grid/public";
+import { Unit } from "./model/grid/unit";
+import { UnitsManager } from "./model/grid/unit";
+>>>>>>> lib
 
 export {
   Grid,
@@ -51,9 +64,7 @@ export {
   CompositeObject,
   Floor,
   Group,
-  Limb,
   Public,
-  SemiGroup,
   Unit,
   UnitsManager,
 };

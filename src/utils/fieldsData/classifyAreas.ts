@@ -1,12 +1,4 @@
-import {
-  ClassifyIslands,
-  FieldsData,
-  Grid,
-  GridObjectTypes,
-  IslandClassObject,
-  IslandClasses,
-  IslandClassesOutput,
-} from "../../types";
+import { ClassifyIslands, Grid, IslandClassesOutput } from "../../types";
 import { mountGrid } from "./mountGrid";
 
 function dfsPerpendicular(
@@ -175,12 +167,12 @@ export const classifyIslands: ClassifyIslands = (areas) => {
   };
   areas.map((area) => {
     const island = mountGrid(area);
-    const [x, y] = getFirstNonZero(island);
-    const islandClass = classifyIsland(island, x, y);
+    const [x, y] = getFirstNonZero(island.grid);
+    const islandClass = classifyIsland(island.grid, x, y);
 
     islandClassesOutput[islandClass]?.push({
       area,
-      islandGrid: island,
+      islandGrid: island.grid,
       islandClass,
     });
   });
